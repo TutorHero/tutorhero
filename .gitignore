@@ -23,6 +23,3 @@ logs
 .env.*
 !.env.example
 
-#ssh keys
-tutorhero_ssh_key
-tutorhero_ssh_key.pub

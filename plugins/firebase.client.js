@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 
-export default defineNuxtConfig(() => {
+export default defineNuxtPlugin(() => {
   const firebaseConfig = {
     apiKey: "AIzaSyAUwtAu6H6TmgIQimkcIIDzLoz7q5cJI-w",
     authDomain: "tutorhero-fc1bf.firebaseapp.com",

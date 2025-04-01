@@ -1,6 +1,6 @@
 <template>
-  <div class="w-screen h-screen flex flex-col justify-center items-center">
-    <h1 class="text-2xl font-bold mb-3">Become a tutor</h1>
+  <div class="mt-72 flex flex-col justify-center items-center">
+    <h2 class="text-3xl font-semibold mb-3">Become a tutor</h2>
     <Button variant="outline" @click="authStore.signInWithGoogle($firebaseAuth)">
       <svg viewBox="0 0 262 262" 
         xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid">

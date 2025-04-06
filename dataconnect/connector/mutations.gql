@@ -1,0 +1,41 @@
+mutation UpdateTutor (
+  $id: UUID!
+  $name: String!
+  $tutortype: String!
+  $gender: String!
+  $email: String!
+  $phoneNo: String!
+  $address: String!
+)@auth(level: PUBLIC) {
+  tutor_update(
+    id: $id
+    data: {
+      name: $name
+      tutortype: $tutortype
+      gender: $gender
+      email: $email
+      phoneNo: $phoneNo
+      address: $address
+    }
+  )
+}
+
+mutation AddTutor (
+  $name: String!
+  $tutortype: String!
+  $gender: String!
+  $email: String!
+  $phoneNo: String!
+  $address: String!
+) @auth(level: PUBLIC){
+  tutor_insert(
+    data: {
+      name: $name
+      tutortype: $tutortype
+      gender: $gender
+      email: $email
+      phoneNo: $phoneNo
+      address: $address
+    }
+  )
+}

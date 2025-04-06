@@ -1,0 +1,233 @@
+extend type Student {
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "Student", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `Student` table.
+  """
+  _count: Int! @fdc_generated(from: "Student", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Student` table where the `address` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  address_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Student.address", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Student` table where the `dob` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  dob_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Student.dob", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Student` table where the `email` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  email_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Student.email", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Student` table where the `gender` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  gender_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Student.gender", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Student` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Student.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Student` table where the `name` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  name_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Student.name", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Student` table where the `phoneNo` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  phoneNo_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Student.phoneNo", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Student` table where the `school` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  school_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Student.school", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Student` table where the `status` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  status_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Student.status", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Student` table where the `tuitionLoc` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  tuitionLoc_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Student.tuitionLoc", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Student` table where the `tutorId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  tutorId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Student.tutorId", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Student` table where the `type` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  type_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Student.type", purpose: QUERY_COUNT)
+  """
+  ✨ Minimum of the `dob` field in the `Student` table.
+  """
+  dob_min: Date @fdc_generated(from: "Student.dob", purpose: QUERY_MIN)
+  """
+  ✨ Maximum of the `dob` field in the `Student` table.
+  """
+  dob_max: Date @fdc_generated(from: "Student.dob", purpose: QUERY_MAX)
+}
+extend type Tutor {
+  """
+  ✨ List `Student` objects in a one-to-many relationship (where `Student`.`tutor` is this object).
+  """
+  students_on_tutor(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: Student_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [Student_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: Student_Having
+  ): [Student!]! @fdc_generated(from: "Student.tutor", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "Tutor", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `Tutor` table.
+  """
+  _count: Int! @fdc_generated(from: "Tutor", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Tutor` table where the `address` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  address_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Tutor.address", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Tutor` table where the `email` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  email_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Tutor.email", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Tutor` table where the `gender` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  gender_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Tutor.gender", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Tutor` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Tutor.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Tutor` table where the `name` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  name_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Tutor.name", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Tutor` table where the `phoneNo` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  phoneNo_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Tutor.phoneNo", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Tutor` table where the `tutortype` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  tutortype_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Tutor.tutortype", purpose: QUERY_COUNT)
+}

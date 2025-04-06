@@ -1,5 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, connectAuthEmulator } from 'firebase/auth'
+import { connectDataConnectEmulator, getDataConnect } from 'firebase/data-connect';
+import { connectorConfig } from '@firebasegen/default-connector';
+
 
 export default defineNuxtPlugin(() => {
   const firebaseConfig = {
@@ -10,15 +13,18 @@ export default defineNuxtPlugin(() => {
     messagingSenderId: "616430032594",
     appId: "1:616430032594:web:820d5cdb1c2cc91bc1ff0b"
   };
-  
+
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app)
+  const auth =  getAuth(app)
+  const dataConnect = getDataConnect(app, connectorConfig);
+  connectDataConnectEmulator(dataConnect, "127.0.0.1",9499);
   connectAuthEmulator(auth, "http://127.0.0.1:9099");
   return {
     provide: {
       firebaseApp: app,
-      firebaseAuth: auth
+      firebaseAuth: auth,
+      firebaseDataConnect: dataConnect
     }
   }
 })

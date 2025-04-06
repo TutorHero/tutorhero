@@ -1,0 +1,24 @@
+query ListAllTutors @auth(level: PUBLIC) {
+  tutors {
+    id
+    name
+    tutortype
+    gender
+    email
+    phoneNo
+    address
+  }
+}
+
+query ListTutorByName($name: String!) @auth(level: PUBLIC) {
+  tutors(where: { name: { eq: $name } }) {
+    id
+    name
+    tutortype
+    gender
+    email
+    phoneNo
+    address
+  }
+}
+

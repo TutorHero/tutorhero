@@ -1,0 +1,12 @@
+specVersion: "v1"
+serviceId: "tutorhero-db"
+location: "asia-southeast1"
+schema:
+  source: "./schema"
+  datasource:
+    postgresql:
+      database: "tutorhero-db"
+      cloudSql:
+        instanceId: "tutorhero-db"
+      # schemaValidation: "COMPATIBLE"
+connectorDirs: ["./connector"]

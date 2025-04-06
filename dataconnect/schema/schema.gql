@@ -1,0 +1,25 @@
+type Student @table(key: ["id"]) {
+  id: UUID! @default(expr: "uuidV4()")
+  name: String!
+  type: String! # "online" or "onsite"
+  gender: String! # "male" or "female"
+  dob: Date!
+  school: String!
+  email: String!
+  phoneNo: String!
+  address: String!
+  status: String!
+  tuitionLoc: String!
+  tutor: Tutor! 
+}
+
+type Tutor @table(key:"id"){
+  id: UUID! @default(expr: "uuidV4()")
+  name: String!
+  tutortype: String   # "online" or "onsite"
+  gender: String # "male" or "female"
+  email: String
+  phoneNo: String
+  address: String
+}
+

@@ -1,6 +1,0 @@
-extend type Student {
-  """
-  ✨ Implicit foreign key field based on `Student`.`tutor`. It must match the value of `Tutor`.`id`. See `@ref` for how to customize it.
-  """
-  tutorId: UUID! @fdc_generated(from: "Student.tutor", purpose: IMPLICIT_REF_FIELD)
-}

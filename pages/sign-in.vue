@@ -28,23 +28,40 @@ import { listAllTutors } from '@firebasegen/default-connector';
 
 
 const { $firebaseAuth, $firebaseDataConnect } = useNuxtApp();
+
 const authStore = useAuthStore()
+
+console.log($firebaseDataConnect);
 
 onMounted(async () => {
   try {
-    listAllTutors().then((response) => {
-      const data = response.data;
-      console.log(data.tutors);
-    });
-
-    console.log(listAllTutors);
-    const ref = listAllTutors();
-    console.log(ref)
-    console.log($firebaseDataConnect)
-    const data = await executeQuery($firebaseDataConnect, ref);
-    console.log("Tutors from Data Connect:", data);
+    const response = await listAllTutors()
+    console.log(response)
   } catch (error) {
     console.error("Data Connect query failed:", error);
   }
-});
+})
+
+// listAllTutors().then((response) => {
+//   const data = response.data;
+//   console.log(data.tutors);
+// });
+
+// onMounted(async () => {
+//   try {
+//     listAllTutors().then((response) => {
+//       const data = response.data;
+//       console.log(data.tutors);
+//     });
+
+//     console.log(listAllTutors);
+//     const ref = listAllTutors();
+//     console.log(ref)
+//     console.log($firebaseDataConnect)
+//     const data = await executeQuery($firebaseDataConnect, ref);
+//     console.log("Tutors from Data Connect:", data);
+//   } catch (error) {
+//     console.error("Data Connect query failed:", error);
+//   }
+// });
 </script>

@@ -18,7 +18,7 @@ export default defineNuxtPlugin(() => {
   const app = initializeApp(firebaseConfig);
   const auth =  getAuth(app)
   const dataConnect = getDataConnect(app, connectorConfig);
-  connectDataConnectEmulator(dataConnect, "127.0.0.1",9499);
+  connectDataConnectEmulator(dataConnect, "127.0.0.1",9399);
   connectAuthEmulator(auth, "http://127.0.0.1:9099");
   return {
     provide: {

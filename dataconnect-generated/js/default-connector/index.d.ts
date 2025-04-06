@@ -74,22 +74,6 @@ export interface UpdateTutorVariables {
 }
 
 /* Allow users to create refs without passing in DataConnect */
-export function updateTutorRef(vars: UpdateTutorVariables): MutationRef<UpdateTutorData, UpdateTutorVariables>;
-/* Allow users to pass in custom DataConnect instances */
-export function updateTutorRef(dc: DataConnect, vars: UpdateTutorVariables): MutationRef<UpdateTutorData, UpdateTutorVariables>;
-
-export function updateTutor(vars: UpdateTutorVariables): MutationPromise<UpdateTutorData, UpdateTutorVariables>;
-export function updateTutor(dc: DataConnect, vars: UpdateTutorVariables): MutationPromise<UpdateTutorData, UpdateTutorVariables>;
-
-/* Allow users to create refs without passing in DataConnect */
-export function addTutorRef(vars: AddTutorVariables): MutationRef<AddTutorData, AddTutorVariables>;
-/* Allow users to pass in custom DataConnect instances */
-export function addTutorRef(dc: DataConnect, vars: AddTutorVariables): MutationRef<AddTutorData, AddTutorVariables>;
-
-export function addTutor(vars: AddTutorVariables): MutationPromise<AddTutorData, AddTutorVariables>;
-export function addTutor(dc: DataConnect, vars: AddTutorVariables): MutationPromise<AddTutorData, AddTutorVariables>;
-
-/* Allow users to create refs without passing in DataConnect */
 export function listAllTutorsRef(): QueryRef<ListAllTutorsData, undefined>;
 /* Allow users to pass in custom DataConnect instances */
 export function listAllTutorsRef(dc: DataConnect): QueryRef<ListAllTutorsData, undefined>;
@@ -104,4 +88,20 @@ export function listTutorByNameRef(dc: DataConnect, vars: ListTutorByNameVariabl
 
 export function listTutorByName(vars: ListTutorByNameVariables): QueryPromise<ListTutorByNameData, ListTutorByNameVariables>;
 export function listTutorByName(dc: DataConnect, vars: ListTutorByNameVariables): QueryPromise<ListTutorByNameData, ListTutorByNameVariables>;
+
+/* Allow users to create refs without passing in DataConnect */
+export function updateTutorRef(vars: UpdateTutorVariables): MutationRef<UpdateTutorData, UpdateTutorVariables>;
+/* Allow users to pass in custom DataConnect instances */
+export function updateTutorRef(dc: DataConnect, vars: UpdateTutorVariables): MutationRef<UpdateTutorData, UpdateTutorVariables>;
+
+export function updateTutor(vars: UpdateTutorVariables): MutationPromise<UpdateTutorData, UpdateTutorVariables>;
+export function updateTutor(dc: DataConnect, vars: UpdateTutorVariables): MutationPromise<UpdateTutorData, UpdateTutorVariables>;
+
+/* Allow users to create refs without passing in DataConnect */
+export function addTutorRef(vars: AddTutorVariables): MutationRef<AddTutorData, AddTutorVariables>;
+/* Allow users to pass in custom DataConnect instances */
+export function addTutorRef(dc: DataConnect, vars: AddTutorVariables): MutationRef<AddTutorData, AddTutorVariables>;
+
+export function addTutor(vars: AddTutorVariables): MutationPromise<AddTutorData, AddTutorVariables>;
+export function addTutor(dc: DataConnect, vars: AddTutorVariables): MutationPromise<AddTutorData, AddTutorVariables>;
 

@@ -22,7 +22,7 @@ export const useTutorStore = defineStore('tutorStore', {
                 console.log(error)
             }
         },
-        async addTutor(tutor) {
+        async createTutor(tutor) {
             try {
                 const { data } = await addTutor(tutor);
                 console.log(data);

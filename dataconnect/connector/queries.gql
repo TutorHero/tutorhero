@@ -22,3 +22,28 @@ query ListTutorByName($name: String!) @auth(level: PUBLIC) {
   }
 }
 
+query ListAllStudents @auth(level: PUBLIC) {
+  students {
+    id
+    name
+    studenttype
+    gender
+    dob
+    email
+    phoneNo
+    address
+    status
+    tuitionLoc
+    tutor{
+      id
+      name
+      tutortype
+      gender
+      email
+      phoneNo
+      address
+    }
+  }
+}
+
+

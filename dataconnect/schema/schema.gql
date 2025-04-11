@@ -1,7 +1,7 @@
 type Student @table(key: ["id"]) {
   id: UUID! @default(expr: "uuidV4()")
   name: String!
-  type: String! # "online" or "onsite"
+  studenttype: String! # "online" or "onsite"
   gender: String! # "male" or "female"
   dob: Date!
   school: String!
@@ -14,7 +14,7 @@ type Student @table(key: ["id"]) {
 }
 
 type Tutor @table(key:"id"){
-  id: UUID! @default(expr: "uuidV4()")
+  id: UUID! @default(expr: "auth.uid")
   name: String!
   tutortype: String   # "online" or "onsite"
   gender: String # "male" or "female"

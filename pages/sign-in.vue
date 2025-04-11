@@ -25,18 +25,18 @@ import { onMounted } from 'vue'
 import { useAuthStore } from "../stores/authStore"
 import { executeQuery } from 'firebase/data-connect';
 import { listAllTutors } from '@firebasegen/default-connector';
-
-
+import { useTutorStore } from '../stores/tutorStore';
 const { $firebaseAuth, $firebaseDataConnect } = useNuxtApp();
-
+const tutors = ref([])
 const authStore = useAuthStore()
-
+const tutorStore = useTutorStore()
 console.log($firebaseDataConnect);
 
 onMounted(async () => {
   try {
-    const response = await listAllTutors()
-    console.log(response)
+    tutorStore.fetchAllTutors()
+    tutors.value = tutorStore.tutors
+    console.log(tutors.value);
   } catch (error) {
     console.error("Data Connect query failed:", error);
   }

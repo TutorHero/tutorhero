@@ -3,5 +3,11 @@
     <TopMenu />
     <NuxtPage class="p-5"/>
   </div>
+  <Toaster />
+
+<!-- Nuxt  -->
+  <ClientOnly>
+    <Toaster />
+  </ClientOnly>
 </template>
 

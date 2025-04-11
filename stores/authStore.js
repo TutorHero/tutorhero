@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { useTutorStore } from '/tutorStore.js';
 
+const tutorStore = useTutorStore()
 export const useAuthStore = defineStore('authStore', {
   state: () => {
     return {
@@ -13,6 +15,9 @@ export const useAuthStore = defineStore('authStore', {
       try {
         const result = await signInWithPopup(auth, provider)
         this.user = result.user
+        const tutorExists = await tutorStore.ensureTutorExists(this.user)
+        return tutorExists
+
       } catch (error) {
         console.log(error)
       }

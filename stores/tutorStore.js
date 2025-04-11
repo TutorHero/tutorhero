@@ -17,7 +17,7 @@ export const useTutorStore = defineStore('tutorStore', {
             try {
                 const { data } = await listAllTutors();
                 console.log(data);
-                this.tutors = tutors;
+                this.tutors = data;
             } catch (error) {
                 console.log(error)
             }
@@ -26,10 +26,14 @@ export const useTutorStore = defineStore('tutorStore', {
             try {
                 const { data } = await addTutor(tutor);
                 console.log(data);
-                await fetchAllTutors();
+                await this.fetchAllTutors();
             } catch (error) {
-                console.log(error)
+                console.log(error);
             }
-        }
+        },
+        async ensureTutorExists(firebaseUser) {
+            const existing = this.tutors.find(t => t.id === firebaseUser.uid);
+            return !!existing;
+          }
     }
 })

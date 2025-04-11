@@ -10,4 +10,3 @@
     <Toaster />
   </ClientOnly>
 </template>
-

@@ -1,5 +1,5 @@
 <template>
-  <FormsStudentForm :id=name title="Student Form" description="Enter your details" />
+  <FormsTutorForm :id=name title="Tutor Form" description="Enter your details" />
 </template>
 
 <script> 

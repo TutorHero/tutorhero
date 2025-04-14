@@ -2,7 +2,7 @@ query ListAllTutors @auth(level: PUBLIC) {
   tutors {
     id
     name
-    tutortype
+    type
     gender
     email
     phoneNo
@@ -14,7 +14,7 @@ query ListTutorByName($name: String!) @auth(level: PUBLIC) {
   tutors(where: { name: { eq: $name } }) {
     id
     name
-    tutortype
+    type
     gender
     email
     phoneNo
@@ -26,7 +26,7 @@ query ListAllStudents @auth(level: PUBLIC) {
   students {
     id
     name
-    studenttype
+    type
     gender
     dob
     email
@@ -37,7 +37,7 @@ query ListAllStudents @auth(level: PUBLIC) {
     tutor{
       id
       name
-      tutortype
+      type
       gender
       email
       phoneNo
@@ -46,4 +46,15 @@ query ListAllStudents @auth(level: PUBLIC) {
   }
 }
 
-
+query checkURL($id: UUID!) @auth(level: PUBLIC) {
+  registrationLinks (
+    where: {
+      _and: [
+        { id: { eq: $id } },
+        { expiryDate: { ge_expr: "request.time" } }
+      ]
+    }
+  ) {
+    id
+  }
+}

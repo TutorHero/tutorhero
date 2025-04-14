@@ -71,8 +71,7 @@ mutation AddStudent(
 }
 
 mutation AddRegistrationLink(
-  $tutorId: String!
-  $expiryDate: Date!
+  $expiryDate: Timestamp!
 ) @auth(level: USER) {
   registrationLink_insert(
     data: {

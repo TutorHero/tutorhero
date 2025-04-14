@@ -44,12 +44,20 @@
 
 <script setup>
 import DialogTrigger from '~/components/ui/dialog/DialogTrigger.vue'
+import { useLinkStore } from '../stores/linkStore';
+const { $firebaseAuth, $firebaseDataConnect } = useNuxtApp();
+const linkStore = useLinkStore()
 const name = 'asdf675as8d57fds6af5867das8f5'
 const url = ref('')
 const copied = ref(false)
+const date = new Date().toISOString();
+linkStore.createLink(date)
+const link = linkStore.link
+console.log(link)
+
+
 onMounted(() => {
   url.value = window.location.href.slice(0,22) + 'studentform?id=' + name
-  console.log(url.value)
 })
 
 
@@ -60,8 +68,8 @@ function myFunction() {
   // alert("Copied the link");
 }
 
+ 
 </script>
-
 <style>
 
 </style>

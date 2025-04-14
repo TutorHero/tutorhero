@@ -26,5 +26,5 @@ type Tutor @table(key: "id") {
 type RegistrationLink @table(key: ["id"]) {
   id: UUID! @default(expr: "uuidV4()")
   tutor: Tutor!
-  expiryDate: Date!
+  expiryDate: Timestamp!
 }

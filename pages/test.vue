@@ -1,15 +1,13 @@
 <template>
-  <FormsTutorForm :id=name title="Tutor Form" description="Enter your details" />
+  test
 </template>
 
-<script> 
-import { FormsStudentForm } from '#components';
-export default {
-  name: "nametest",
-  computed: {
-    name() {
-      return this.$route.query.name;
-    }
-  }
-}
+<script setup> 
+import { useLinkStore } from '../stores/linkStore';
+const { $firebaseAuth, $firebaseDataConnect } = useNuxtApp();
+const linkStore = useLinkStore()
+const date = new Date().toISOString();
+linkStore.createLink(date)
+const link = linkStore.link
+console.log(link)
 </script>

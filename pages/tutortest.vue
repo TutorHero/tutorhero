@@ -40,24 +40,15 @@
       </DialogContent>
     </Dialog>
   </div>
-  <!-- <div class="flex w-full max-w-sm items-center gap-1.5">
-    <a href=url>{{ url }}</a>
-    <Button variant="outline" @click="myFunction()">Copy text</button>
-  </div> -->
-  <!-- <div>
-    <router-link :to="{name:'test', query:{name: url}}">Go to test page</router-link>
-  </div> -->
 </template>
 
 <script setup>
 import DialogTrigger from '~/components/ui/dialog/DialogTrigger.vue'
-
-const list = ['jansonasdasdasasdasd','jerrylsadasdsadsad','yangchuanasdasdasdsad','aidenklsafjlakslksflk']
-const name = list[Math.floor(Math.random()*list.length)]
+const name = 'asdf675as8d57fds6af5867das8f5'
 const url = ref('')
 const copied = ref(false)
 onMounted(() => {
-  url.value = window.location.href.slice(0,22) + 'test?name=' + name
+  url.value = window.location.href.slice(0,22) + 'studentform?id=' + name
   console.log(url.value)
 })
 

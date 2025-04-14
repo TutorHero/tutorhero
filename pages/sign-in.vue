@@ -37,6 +37,7 @@ onMounted(async () => {
     tutorStore.fetchAllTutors()
     tutors.value = tutorStore.tutors
     console.log(tutors.value);
+    console.log(authStore.user)
   } catch (error) {
     console.error("Data Connect query failed:", error);
   }

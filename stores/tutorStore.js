@@ -16,7 +16,6 @@ export const useTutorStore = defineStore('tutorStore', {
         async fetchAllTutors() {
             try {
                 const { data } = await listAllTutors();
-                console.log(data);
                 this.tutors = data;
             } catch (error) {
                 console.log(error)
@@ -25,7 +24,6 @@ export const useTutorStore = defineStore('tutorStore', {
         async createTutor(tutor) {
             try {
                 const { data } = await addTutor(tutor);
-                console.log(data);
                 await this.fetchAllTutors();
             } catch (error) {
                 console.log(error);

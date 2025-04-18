@@ -1,7 +1,7 @@
 <template>
   <div class="mt-72 flex flex-col justify-center items-center">
     <h2 class="text-3xl font-semibold mb-3">Become a tutor</h2>
-    <Button variant="outline" @click="authStore.signInWithGoogle($firebaseAuth)">
+    <Button variant="outline" @click="$firebaseSignIn">
       <svg viewBox="0 0 262 262" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid">
         <path
           d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"
@@ -21,47 +21,6 @@
   </div>
 </template>
 <script setup>
-import { onMounted } from 'vue'
-import { useAuthStore } from "../stores/authStore"
-import { executeQuery } from 'firebase/data-connect';
-import { listAllTutors } from '@firebasegen/default-connector';
-
-
-const { $firebaseAuth, $firebaseDataConnect } = useNuxtApp();
-
-const authStore = useAuthStore()
-
-console.log($firebaseDataConnect);
-
-onMounted(async () => {
-  try {
-    const response = await listAllTutors()
-    console.log(response)
-  } catch (error) {
-    console.error("Data Connect query failed:", error);
-  }
-})
-
-// listAllTutors().then((response) => {
-//   const data = response.data;
-//   console.log(data.tutors);
-// });
-
-// onMounted(async () => {
-//   try {
-//     listAllTutors().then((response) => {
-//       const data = response.data;
-//       console.log(data.tutors);
-//     });
-
-//     console.log(listAllTutors);
-//     const ref = listAllTutors();
-//     console.log(ref)
-//     console.log($firebaseDataConnect)
-//     const data = await executeQuery($firebaseDataConnect, ref);
-//     console.log("Tutors from Data Connect:", data);
-//   } catch (error) {
-//     console.error("Data Connect query failed:", error);
-//   }
-// });
+definePageMeta({ layout: false });
+const { $firebaseSignIn } = useNuxtApp();
 </script>

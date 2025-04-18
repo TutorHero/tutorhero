@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
-import { addRegistrationLink } from '@firebasegen/default-connector';
+import { addRegistrationLink, checkUrl } from '@firebasegen/default-connector';
+
 
 
 // Call the `listAllTutors()` function to execute the query.
@@ -16,22 +17,26 @@ export const useLinkStore = defineStore('linkStore', {
     actions: {
         async createLink(date) {
             try {
-              const { data } = await addRegistrationLink(date);
-              console.log(data);
-              this.link = data;
+                console.log(date)
+                const expiryDate  = new Date(date.getTime() + 1 * 24 * 60 * 60 * 1000);
+                console.log(expiryDate)
+                const { data } = await addRegistrationLink({expiryDate});
+                console.log(data);
+                this.link = data.registrationLink_insert.id;
             } catch (error) {
                 console.log(error)
             }
-        },
+        },  
 
-        // async trycheckURL() {
-        //   try {
-        //     const { data } = await checkURL(id);
-        //     console.log(data);
-        //     this.returnedlink = data;
-        //   } catch (error) {
-        //     console.log(error)
-        //   }
-        // }
+        async trycheckURL(id) {
+          try {
+            console.log(id)
+            const { data } = await checkUrl({id});
+            console.log(data);
+            this.returnedlink = data;
+          } catch (error) {
+            console.log(error)
+          }
+         }
     }
 })

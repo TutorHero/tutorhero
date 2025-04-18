@@ -39,8 +39,6 @@ mutation AddTutor(
   )
 }
 
-
-
 mutation AddStudent(
   $name: String!
   $type: String! # "online" or "onsite"
@@ -70,13 +68,38 @@ mutation AddStudent(
   )
 }
 
-mutation AddRegistrationLink(
-  $expiryDate: Timestamp!
+mutation UpdateStudent(
+  $id: UUID
+  $name: String!
+  $type: String! # "online" or "onsite"
+  $gender: String! # "male" or "female"
+  $dob: Date!
+  $school: String!
+  $email: String!
+  $phoneNo: String!
+  $address: String!
+  $status: String!
+  $tuitionLoc: String!
 ) @auth(level: USER) {
-  registrationLink_insert(
+  student_update(
+    first: { where: { tutorId: { eq_expr: "auth.uid" }, id: { eq: $id } } }
     data: {
-      tutorId_expr: "auth.uid"
-      expiryDate: $expiryDate
+      name: $name
+      type: $type
+      gender: $gender
+      dob: $dob
+      school: $school
+      email: $email
+      phoneNo: $phoneNo
+      address: $address
+      status: $status
+      tuitionLoc: $tuitionLoc
     }
+  )
+}
+
+mutation AddRegistrationLink($expiryDate: Timestamp!) @auth(level: USER) {
+  registrationLink_insert(
+    data: { tutorId_expr: "auth.uid", expiryDate: $expiryDate }
   )
 }

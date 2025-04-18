@@ -46,6 +46,22 @@ query ListAllStudents @auth(level: PUBLIC) {
   }
 }
 
+query ListMyStudents @auth(level: USER) {
+  students(where: { tutor: { id: { eq_expr: "auth.uid" } } }) {
+    id
+    name
+    type
+    gender  
+    dob
+    email
+    phoneNo
+    address
+    status
+    tuitionLoc
+  }
+}
+
+
 query checkURL($id: UUID!) @auth(level: PUBLIC) {
   registrationLinks (
     where: {
@@ -56,5 +72,11 @@ query checkURL($id: UUID!) @auth(level: PUBLIC) {
     }
   ) {
     id
+    submitted
+    expiryDate
+    tutor {
+      id
+      name
+      type
   }
-}
+  }}

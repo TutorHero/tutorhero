@@ -27,4 +27,5 @@ type RegistrationLink @table(key: ["id"]) {
   id: UUID! @default(expr: "uuidV4()")
   tutor: Tutor!
   expiryDate: Timestamp!
+  submitted: Boolean! @default(value: false)
 }

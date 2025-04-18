@@ -48,7 +48,7 @@ function FormSubmit(data) {
 
 const schema = z.object({
   name: z.string({required_error: 'Name is required.',}),
-  tutortype: z.nativeEnum(tutortypes).describe('Type of tutor eg. Online, Face to face'),
+  type: z.nativeEnum(tutortypes).describe('Type of tutor eg. Online, Face to face'),
   gender: z.nativeEnum(genders).describe("Gender"),
   email: z.string().email().describe("Email"),
   phoneNo: z.string().describe("Phone Number"),

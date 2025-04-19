@@ -28,9 +28,6 @@
             </button>
           </div>
         </div>
-        <DialogFooter>
-          
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   </div>

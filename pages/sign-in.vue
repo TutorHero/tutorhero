@@ -21,8 +21,6 @@
   </div>
 </template>
 <script setup>
-import { onMounted } from 'vue'
-import { useAuthStore } from "../stores/authStore"
 
 definePageMeta({ layout: false });
 const { $firebaseSignIn } = useNuxtApp();

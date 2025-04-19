@@ -7,29 +7,29 @@ import { addStudent, listAllStudents } from '@firebasegen/default-connector';
 
 
 export const useStudentStore = defineStore('studentStore', {
-    state: () => {
-        return {
-            students: [],
-        }
-    },
-    actions: {
-        async fetchAllStudents() {
-            try {
-                const { data } = await listAllStudents();
-                console.log(data);
-                this.students = data;
-            } catch (error) {
-                console.log(error)
-            }
-        },
-        async createStudent(tutor) {
-            try {
-                const { data } = await addStudent(tutor);
-                console.log("here ran", data);
-                await this.fetchAllStudents();
-            } catch (error) {
-                console.log(error);
-            }
-        },
+  state: () => {
+    return {
+      students: [],
     }
+  },
+  actions: {
+    async fetchAllStudents() {
+      try {
+        const { data } = await listAllStudents();
+        console.log(data);
+        this.students = data;
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async createStudent(student) {
+      try {
+        const { data } = await addStudent(student);
+        console.log("here ran", data);
+        await this.fetchAllStudents();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  }
 })

@@ -25,7 +25,7 @@ export const useStudentStore = defineStore('studentStore', {
         async createStudent(tutor) {
             try {
                 const { data } = await addStudent(tutor);
-                console.log(data);
+                console.log("here ran", data);
                 await this.fetchAllStudents();
             } catch (error) {
                 console.log(error);

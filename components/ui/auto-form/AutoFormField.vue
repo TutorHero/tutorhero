@@ -25,21 +25,23 @@ const { isDisabled, isHidden, isRequired, overrideOptions } = useDependencies(pr
 </script>
 
 <template>
-  <component
-    :is="isValidConfig(config)
-      ? typeof config.component === 'string'
-        ? INPUT_COMPONENTS[config.component!]
-        : config.component
-      : INPUT_COMPONENTS[DEFAULT_ZOD_HANDLERS[shape.type]] "
-    v-if="!isHidden"
-    :field-name="fieldName"
-    :label="shape.schema?.description"
-    :required="isRequired || shape.required"
-    :options="overrideOptions || shape.options"
-    :disabled="isDisabled"
-    :config="config"
-    v-bind="delegatedProps"
-  >
-    <slot />
-  </component>
+  <div class="mt-1">
+    <component
+      :is="isValidConfig(config)
+        ? typeof config.component === 'string'
+          ? INPUT_COMPONENTS[config.component!]
+          : config.component
+        : INPUT_COMPONENTS[DEFAULT_ZOD_HANDLERS[shape.type]] "
+      v-if="!isHidden"
+      :field-name="fieldName"
+      :label="shape.schema?.description"
+      :required="isRequired || shape.required"
+      :options="overrideOptions || shape.options"
+      :disabled="isDisabled"
+      :config="config"
+      v-bind="delegatedProps"
+      >
+      <slot />
+    </component>
+  </div>
 </template>

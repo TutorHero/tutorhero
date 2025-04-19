@@ -5,6 +5,7 @@
       <OverviewLessons />
       <OverviewEarnings />
     </div>
+    <GenerateStudentLink />
   </div>
 </template>
 

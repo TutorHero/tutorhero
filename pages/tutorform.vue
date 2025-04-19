@@ -5,18 +5,30 @@
       @submit = "(data) => {
         FormSubmit(data)
       }"
+      :field-config="{
+        email: {
+          inputProps: {
+            disabled: true
+          }
+        }
+      }"
       title="Tutor Form"
       description="Fill in your details"
     >
-    <div class="flex justify-end">
-      <Button variant="outline" type="submit" class="mt-4" @click="() => {
-      toast({
-        description: 'Data Submitted Sucessfully',
-      });
-    }">Submit</Button>
+    <div class="flex justify-end gap-3">
+      <Button variant="outline" @click="navigateTo('sign-in')" class="mt-4">Go back to sign in</Button>
+      <Button type="submit" class="mt-4" @click="() => {
+        toast({
+            description: 'Data Submitted Sucessfully',
+          });
+          navigateTo('overview')
+        }">
+        Submit
+      </Button>
     </div>
     </AutoForm>
   </div>
+  
 </template>
 
 <script setup >
@@ -26,7 +38,12 @@ const { toast } = useToast()
 const tutorStore = useTutorStore()
 const tutors = ref([])
 const { $firebaseAuth, $firebaseDataConnect } = useNuxtApp();
-console.log($firebaseAuth)
+
+const user = $firebaseAuth.currentUser
+const email = user.email
+const name = user.displayName
+const number = user.phoneNumber
+
 const tutortypes = {
   hybrid: "Hybrid",
   online: "Online",
@@ -39,19 +56,17 @@ const genders = {
 }
 
 function FormSubmit(data) {
-  console.log(data)
   tutorStore.createTutor(data)
-  tutorStore.fetchAllTutors()
   tutors.value = tutorStore.tutors
   console.log(tutors.value)
 }
 
 const schema = z.object({
-  name: z.string({required_error: 'Name is required.',}),
+  email: z.string().email().describe("Email").default(email),
+  name: z.string({required_error: 'Name is required.',}).default(name),
   type: z.nativeEnum(tutortypes).describe('Type of tutor eg. Online, Face to face'),
   gender: z.nativeEnum(genders).describe("Gender"),
-  email: z.string().email().describe("Email"),
-  phoneNo: z.string().describe("Phone Number"),
+  phoneNo: z.string().describe("Phone Number").default(number),
   address: z.string().describe("Address")
 })
 

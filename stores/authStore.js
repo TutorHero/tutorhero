@@ -6,7 +6,7 @@ import { useTutorStore } from './tutorStore.js';
 export const useAuthStore = defineStore('authStore', {
   state: () => {
     return {
-      user: {}
+      user: {},
     }
   },
   actions: {
@@ -16,10 +16,11 @@ export const useAuthStore = defineStore('authStore', {
         const tutorStore = useTutorStore()
         const result = await signInWithPopup(auth, provider)
         this.user = result.user
+        // console.log(this.user)
         const tutorExists = await tutorStore.ensureTutorExists(this.user)
         return tutorExists
 
-        console.log(this.user)
+        
       } catch (error) {
         console.log(error)
       }

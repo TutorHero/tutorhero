@@ -12,10 +12,10 @@ onMounted(async () => {
   await linkStore.createLink(date);
   const link = linkStore.link;
   console.log(link);
-  const { data } = await listMyStudents();
-  console.log(data);
-  await linkStore.trycheckURL(link);
-  console.log('The link is valid:', linkStore.returnedlink);
+  // const { data } = await listMyStudents();
+  // console.log(data);
+  // await linkStore.trycheckURL(link);
+  // console.log('The link is valid:', linkStore.returnedlink);
 });
 
 </script>

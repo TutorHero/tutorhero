@@ -46,7 +46,7 @@ async function generateLink() {
   const date = new Date()
   await linkStore.createLink(date)
   link.value = linkStore.link
-  url.value = window.location.href.slice(0,22) + 'studentform?id=' + link.value
+  url.value = 'http:localhost:3000' + '/student-form?id=' + link.value
 }
 
 function copyLink() {

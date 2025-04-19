@@ -26,6 +26,4 @@ const data = ref<Invoice[]>([
   },
   // ...
 ])
-
-definePageMeta({ middleware: ['auth'] })
 </script>

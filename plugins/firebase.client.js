@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, connectAuthEmulator } from 'firebase/auth'
+import { getAuth, signInWithPopup, GoogleAuthProvider, connectAuthEmulator, onAuthStateChanged } from 'firebase/auth'
 import { connectDataConnectEmulator, getDataConnect } from 'firebase/data-connect';
 import { connectorConfig } from '@firebasegen/default-connector';
 
@@ -16,14 +16,35 @@ export default defineNuxtPlugin(() => {
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
+
   const auth =  getAuth(app)
+
+  const signInWithGoogle = async () => {
+    const provider = new GoogleAuthProvider()
+    try {
+      return await signInWithPopup(auth, provider)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      return navigateTo('/overview');
+    } else {
+      return navigateTo('/sign-in');
+    }
+  });
+
   const dataConnect = getDataConnect(app, connectorConfig);
   connectDataConnectEmulator(dataConnect, "127.0.0.1",9399);
   connectAuthEmulator(auth, "http://127.0.0.1:9099");
+  
   return {
     provide: {
       firebaseApp: app,
       firebaseAuth: auth,
+      firebaseSignIn: signInWithGoogle,
       firebaseDataConnect: dataConnect
     }
   }

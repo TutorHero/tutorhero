@@ -69,12 +69,5 @@ const schema = z.object({
   phoneNo: z.string().describe("Phone Number").default(number),
   address: z.string().describe("Address")
 })
-
-
-  
-
-
   
 </script>
-
-<!-- tutorStore.addTutor(data) -->

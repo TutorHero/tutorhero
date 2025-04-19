@@ -29,9 +29,7 @@ export default defineNuxtPlugin(() => {
   }
 
   onAuthStateChanged(auth, (user) => {
-    if (user) {
-      return navigateTo('/overview');
-    } else {
+    if (!user) {
       return navigateTo('/sign-in');
     }
   });

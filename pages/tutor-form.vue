@@ -1,23 +1,16 @@
 <template>
   <div class="mt-20 flex justify-center">
     <AutoForm
-      ref="form"
-      :schema = schema
-      @submit = "(data) => {
+      :form="form"
+      :schema="schema"
+      @submit="(data) => {
         FormSubmit(data)
       }"
       :field-config="{
         email: {
           inputProps: {
             disabled: true,
-            placeholder: user.email
           }
-        },
-        name: {
-          inputProps: { placeholder: user.displayName }
-        },
-        number: {
-          inputProps: { placeholder: user.phoneNumber }
         }
       }"
       title="Tutor Form"
@@ -40,6 +33,8 @@
 
 <script setup >
 import z from "zod"
+import { toTypedSchema } from '@vee-validate/zod'
+import { useForm } from 'vee-validate'
 import { useToast } from '@/components/ui/toast/use-toast'
 const { toast } = useToast()
 const tutorStore = useTutorStore()
@@ -78,7 +73,15 @@ const schema = z.object({
   address: z.string().describe("Address")
 })
 
-const form = ref()
-console.log(form)
+const form = useForm({
+  validationSchema: toTypedSchema(schema),
+})
+
+watchEffect(() => {
+  form.setFieldValue('email', user.value.email)
+  form.setFieldValue('name', user.value.displayName)
+  form.setFieldValue('number', user.value.phoneNumber)
+})
+
 definePageMeta({ layout: false });
 </script>

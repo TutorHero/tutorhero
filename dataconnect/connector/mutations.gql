@@ -103,3 +103,10 @@ mutation createRegistrationLink($expiryDate: Timestamp!) @auth(level: USER) {
     data: { tutorId_expr: "auth.uid", expiryDate: $expiryDate }
   )
 }
+
+mutation cleanRegistrationLinks @auth(level: NO_ACCESS){
+  registrationLink_deleteMany(
+    where: { expiryDate: { lt_expr: "request.time" } }
+    
+  )
+}

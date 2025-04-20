@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { addRegistrationLink, checkUrl } from '@firebasegen/default-connector';
+import { createRegistrationLink, isUrlValid } from '@firebasegen/default-connector';
 
 
 
@@ -19,9 +19,7 @@ export const useLinkStore = defineStore('linkStore', {
             try {
                 console.log(date)
                 const expiryDate  = new Date(date.getTime() + 1 * 24 * 60 * 60 * 1000);
-                console.log(expiryDate)
-                const { data } = await addRegistrationLink({expiryDate});
-                console.log(data);
+                const { data } = await createRegistrationLink({expiryDate});
                 this.link = data.registrationLink_insert.id;
             } catch (error) {
                 console.log(error)
@@ -31,8 +29,7 @@ export const useLinkStore = defineStore('linkStore', {
         async trycheckURL(id) {
           try {
             console.log(id)
-            const { data } = await checkUrl({id});
-            console.log(data);
+            const { data } = await isUrlValid({id});
             this.returnedlink = data;
           } catch (error) {
             console.log(error)

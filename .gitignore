@@ -67,3 +67,7 @@ node_modules/
 
 # dataconnect generated files
 .dataconnect
+
+# Ignore Firebase Data Connect generated SDK
+/dataconnect-generated/
+/dataconnect-generated/**

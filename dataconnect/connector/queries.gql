@@ -1,5 +1,7 @@
-query ListAllTutors @auth(level: PUBLIC) {
-  tutors {
+
+
+query getTutor @auth(level: USER) {
+  tutors(where: { id: { eq_expr: "auth.uid" } }) {
     id
     name
     type
@@ -10,7 +12,7 @@ query ListAllTutors @auth(level: PUBLIC) {
   }
 }
 
-query ListTutorByName($name: String!) @auth(level: PUBLIC) {
+query getTutorByName($name: String!) @auth(level: PUBLIC) {
   tutors(where: { name: { eq: $name } }) {
     id
     name
@@ -22,31 +24,9 @@ query ListTutorByName($name: String!) @auth(level: PUBLIC) {
   }
 }
 
-query ListAllStudents @auth(level: PUBLIC) {
-  students {
-    id
-    name
-    type
-    gender
-    dob
-    email
-    phoneNo
-    address
-    status
-    tuitionLoc
-    tutor{
-      id
-      name
-      type
-      gender
-      email
-      phoneNo
-      address
-    }
-  }
-}
 
-query ListMyStudents @auth(level: USER) {
+
+query getTutorStudents @auth(level: USER) {
   students(where: { tutor: { id: { eq_expr: "auth.uid" } } }) {
     id
     name
@@ -62,7 +42,7 @@ query ListMyStudents @auth(level: USER) {
 }
 
 
-query checkURL($id: UUID!) @auth(level: PUBLIC) {
+query isUrlValid($id: UUID!) @auth(level: PUBLIC) {
   registrationLinks (
     where: {
       _and: [

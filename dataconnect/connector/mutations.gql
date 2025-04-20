@@ -19,7 +19,7 @@ mutation UpdateTutor(
   )
 }
 
-mutation AddTutor(
+mutation createTutor(
   $name: String!
   $type: String!
   $gender: String!
@@ -39,7 +39,7 @@ mutation AddTutor(
   )
 }
 
-mutation AddStudent(
+mutation createStudent(
   $name: String!
   $type: String! # "online" or "onsite"
   $gender: String! # "male" or "female"
@@ -68,7 +68,7 @@ mutation AddStudent(
   )
 }
 
-mutation UpdateStudent(
+mutation updateStudent(
   $id: UUID
   $name: String!
   $type: String! # "online" or "onsite"
@@ -98,7 +98,7 @@ mutation UpdateStudent(
   )
 }
 
-mutation AddRegistrationLink($expiryDate: Timestamp!) @auth(level: USER) {
+mutation createRegistrationLink($expiryDate: Timestamp!) @auth(level: USER) {
   registrationLink_insert(
     data: { tutorId_expr: "auth.uid", expiryDate: $expiryDate }
   )

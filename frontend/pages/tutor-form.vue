@@ -1,14 +1,15 @@
 <template>
-  <div class="flex justify-center">
+  <div class="mt-20 flex justify-center">
     <AutoForm
-      :schema = schema
-      @submit = "(data) => {
+      :form="form"
+      :schema="schema"
+      @submit="(data) => {
         FormSubmit(data)
       }"
       :field-config="{
         email: {
           inputProps: {
-            disabled: true
+            disabled: true,
           }
         }
       }"
@@ -28,21 +29,23 @@
     </div>
     </AutoForm>
   </div>
-  
 </template>
 
 <script setup >
 import z from "zod"
+import { toTypedSchema } from '@vee-validate/zod'
+import { useForm } from 'vee-validate'
 import { useToast } from '@/components/ui/toast/use-toast'
 const { toast } = useToast()
 const tutorStore = useTutorStore()
 const tutors = ref([])
 const { $firebaseAuth, $firebaseDataConnect } = useNuxtApp();
 
-const user = $firebaseAuth.currentUser
-const email = user.email
-const name = user.displayName
-const number = user.phoneNumber
+const authStore = useAuthStore()
+const { user } = storeToRefs(authStore)
+const email = ref(user.email)
+const name = ref(user.displayName)
+const number = ref(user.phoneNumber)
 
 const tutortypes = {
   hybrid: "Hybrid",
@@ -55,19 +58,30 @@ const genders = {
   female: "Female"
 }
 
+
 function FormSubmit(data) {
   tutorStore.createTutor(data)
   tutors.value = tutorStore.tutors
-  console.log(tutors.value)
 }
 
 const schema = z.object({
-  email: z.string().email().describe("Email").default(email),
-  name: z.string({required_error: 'Name is required.',}).default(name),
+  email: z.string().email().describe("Email"),
+  name: z.string({required_error: 'Name is required.',}),
   type: z.nativeEnum(tutortypes).describe('Type of tutor eg. Online, Face to face'),
   gender: z.nativeEnum(genders).describe("Gender"),
-  phoneNo: z.string().describe("Phone Number").default(number),
+  phoneNo: z.string().describe("Phone Number"),
   address: z.string().describe("Address")
 })
-  
+
+const form = useForm({
+  validationSchema: toTypedSchema(schema),
+})
+
+watchEffect(() => {
+  form.setFieldValue('email', user.value.email)
+  form.setFieldValue('name', user.value.displayName)
+  form.setFieldValue('number', user.value.phoneNumber)
+})
+
+definePageMeta({ layout: false });
 </script>

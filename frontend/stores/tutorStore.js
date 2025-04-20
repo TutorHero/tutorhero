@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { addTutor, listAllTutors } from '@firebasegen/default-connector';
+import { createTutor, getTutor } from '@firebasegen/default-connector';
 
 
 // Call the `listAllTutors()` function to execute the query.
@@ -15,7 +15,7 @@ export const useTutorStore = defineStore('tutorStore', {
     actions: {
         async fetchAllTutors() {
             try {
-                const { data } = await listAllTutors();
+                const { data } = await getTutor();
                 this.tutors = data;
                 console.log(data)
             } catch (error) {
@@ -24,16 +24,10 @@ export const useTutorStore = defineStore('tutorStore', {
         },
         async createTutor(tutor) {
             try {
-                const { data } = await addTutor(tutor);
-                await this.fetchAllTutors();
+                const { data } = await createTutor(tutor);
             } catch (error) {
                 console.log(error);
             }
         },
-        async ensureTutorExists(firebaseUser) {
-            console.log("THIS IS THE FIREBASE USER ID" + firebaseUser.uid)
-            const existing = this.tutors.find(t => t.id === firebaseUser.uid);
-            return !!existing;
-          }
     }
 })

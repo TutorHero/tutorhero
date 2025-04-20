@@ -3,7 +3,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   try {
     const { $firebaseAuth } = useNuxtApp();
     const user = $firebaseAuth.currentUser;
-
+    console.log(user)
     if (!user) {
       return navigateTo('/sign-in');
     }

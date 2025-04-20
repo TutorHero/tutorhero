@@ -22,15 +22,21 @@ export default defineNuxtPlugin(() => {
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider()
     try {
-      return await signInWithPopup(auth, provider)
+      await signInWithPopup(auth, provider)
+      navigateTo('/tutor-form')
     } catch (error) {
       console.log(error)
     }
   }
 
+  const authStore = useAuthStore()
+  const route = useRoute()
   onAuthStateChanged(auth, (user) => {
+    authStore.user = user
     if (!user) {
-      return navigateTo('/sign-in');
+      if (route.name !== "student-form") {
+        return navigateTo('/sign-in');
+      }
     }
   });
 

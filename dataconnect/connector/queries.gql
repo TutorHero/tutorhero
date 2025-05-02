@@ -71,7 +71,7 @@ query isUrlValid($id: UUID!) @auth(level: PUBLIC) {
 
 
 query getSubjectByName($name: String!) @auth(level: USER) {
-  subjects(where: { name: { eq: $name } } ){
+  subjects(where: { name: { eq: $name } },limit:1 ){
     id # Get the ID if it exists
     name
     

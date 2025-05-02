@@ -1,5 +1,3 @@
-
-
 query getTutor @auth(level: USER) {
   tutors(where: { id: { eq_expr: "auth.uid" } }) {
     id
@@ -9,6 +7,11 @@ query getTutor @auth(level: USER) {
     email
     phoneNo
     address
+    subjects: tutorSubjects_on_tutor {
+      subject {
+        name
+      }
+    }
   }
 }
 
@@ -21,34 +24,38 @@ query getTutorByName($name: String!) @auth(level: PUBLIC) {
     email
     phoneNo
     address
+    subjects: tutorSubjects_on_tutor {
+      subject {
+        name
+      }
+  }
   }
 }
-
-
 
 query getTutorStudents @auth(level: USER) {
   students(where: { tutor: { id: { eq_expr: "auth.uid" } } }) {
     id
     name
     type
-    gender  
+    gender
     dob
     email
     phoneNo
     address
     status
     tuitionLoc
+    subjects: studentSubjects_on_student {
+      subject {
+        name
+      }
+    }
   }
 }
 
-
 query isUrlValid($id: UUID!) @auth(level: PUBLIC) {
-  registrationLinks (
+  registrationLinks(
     where: {
-      _and: [
-        { id: { eq: $id } },
-        { expiryDate: { ge_expr: "request.time" } }
-      ]
+      _and: [{ id: { eq: $id } }, { expiryDate: { ge_expr: "request.time" } }]
     }
   ) {
     id
@@ -58,5 +65,16 @@ query isUrlValid($id: UUID!) @auth(level: PUBLIC) {
       id
       name
       type
+    }
   }
-  }}
+}
+
+
+query getSubjectByName($name: String!) @auth(level: USER) {
+  subjects(where: { name: { eq: $name } } ){
+    id # Get the ID if it exists
+    name
+    
+  }
+}
+  

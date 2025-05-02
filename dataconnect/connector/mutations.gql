@@ -104,9 +104,21 @@ mutation createRegistrationLink($expiryDate: Timestamp!) @auth(level: USER) {
   )
 }
 
-mutation cleanRegistrationLinks @auth(level: NO_ACCESS){
+mutation cleanRegistrationLinks @auth(level: NO_ACCESS) {
   registrationLink_deleteMany(
     where: { expiryDate: { lt_expr: "request.time" } }
-    
+  )
+}
+mutation createSubject($name: String!) @auth(level: USER) {
+  subject_insert(data:{
+    name:$name
+  }
+  )
+}
+
+mutation createTutorSubject($subjectId: UUID!)
+@auth(level: USER) {
+  tutorSubject_insert(
+    data: { tutorId_expr: "auth.uid", subjectId: $subjectId  }
   )
 }

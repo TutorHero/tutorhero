@@ -29,3 +29,18 @@ type RegistrationLink @table(key: ["id"]) {
   expiryDate: Timestamp!
   submitted: Boolean! @default(value: false)
 }
+
+type Subject @table(key:["id"]){
+  id: UUID! @default(expr:"uuidV4()")
+  name: String!
+}
+type StudentSubject @table(key:["student","subject"]) {
+  student: Student!
+  subject: Subject!
+}
+
+type TutorSubject @table(key:["tutor","subject"]){
+  tutor: Tutor!
+  subject: Subject!
+}
+

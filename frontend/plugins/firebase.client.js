@@ -22,8 +22,8 @@ export default defineNuxtPlugin(() => {
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider()
     try {
-      await signInWithPopup(auth, provider)
-      navigateTo('/tutor-form')
+      const user = await signInWithPopup(auth, provider)
+      return user
     } catch (error) {
       console.log(error)
     }

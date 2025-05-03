@@ -14,17 +14,20 @@ const dataConnect = getDataConnect({
 });
 
 exports.scheduledCronJob = onSchedule("0 0 1 * *", async (event) => {
+    const date = new Date()
+    const expiry = new Date(date.getTime() - 30 * 24 * 60 * 60 * 1000);
+    logger.info(expiry)
     const mutation =
-        `mutation cleanRegistrationLinks @auth(level: NO_ACCESS){
-    registrationLink_deleteMany(
-    where: { expiryDate: { lt_expr: "request.time" } }
-    )
-    }`
+        `mutation cleanStudentFormURLs($expiryDate:Timestamp!) @auth(level: NO_ACCESS) {
+            studentFormURL_deleteMany(
+              where: { expiryDate: { lt: $expiryDate } }
+            )
+        }`
+
     try {
-        const { data } = await dataConnect.executeGraphql(mutation)
+        const { data } = await dataConnect.executeGraphql(mutation, { variables: { expiryDate: expiry } })
         logger.info(data);
     } catch (error) {
         logger.error(error);
     }
 })
-

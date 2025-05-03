@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center">
+  <div class="my-20 flex justify-center">
     <AutoForm
       :schema = schema
       :dependencies="[{
@@ -26,6 +26,7 @@
 </template>
 
 <script setup >
+definePageMeta({ layout: false });
 import z from "zod"
 import { useToast } from '@/components/ui/toast/use-toast'
 import { DependencyType } from "@/components/ui/auto-form/interface"
@@ -33,27 +34,24 @@ const studentStore = useStudentStore()
 const students = ref([])
 const { $firebaseAuth, $firebaseDataConnect } = useNuxtApp();
 const { toast } = useToast()
-const linkStore = useLinkStore()
 
 onMounted(() => {
   const route = useRoute()
   const link = route.query.id
-  const data = linkStore.trycheckURL(link)
-  console.log(data)
 })
 
 function FormSubmit(data) {
   data["dob"] = data["dob"].toISOString().split('T')[0]
   data["status"] = "current"
-  // if (data["year"] == "Others: Please specify below") {
-  //   data["year"] = data["otheryear"]
-  // } 
+  if (data["year"] == "Others: Please specify below") {
+    data["year"] = data["otheryear"]
+  } 
   studentStore.createStudent(data)
   students.value = studentStore.students
   console.log(students.value)
 }
 
-const yearofstudy = {
+const yearOfStudy = {
   p1: "Primary 1",
   p2: "Primary 2",
   p3: "Primary 3",
@@ -76,8 +74,8 @@ const schema = z.object({
   email: z.string().email(),
   type: z.nativeEnum(["Online", "Face to face", "Hybrid"]).describe("Type of student"),
   school: z.string().describe('School'),
-  // year: z.nativeEnum(yearofstudy).describe("Year of study"),
-  // otheryear: z.string().describe("Specify here"),
+  year: z.nativeEnum(yearOfStudy).describe("Year of study"),
+  otheryear: z.string().describe("Specify here"),
   dob: z.coerce.date().describe("Date of Birth"),
   gender: z.enum(["Male", "Female"]),
   phoneNo: z.string().describe("Phone number"),

@@ -4,7 +4,7 @@
       :form="form"
       :schema="schema"
       @submit="(data) => {
-        FormSubmit(data)
+        submitForm(data)
       }"
       :field-config="{
         email: {
@@ -20,7 +20,7 @@
       <Button variant="outline" @click="navigateTo('sign-in')" class="mt-4">Go back to sign in</Button>
       <Button type="submit" class="mt-4" @click="() => {
         toast({
-            description: 'Data Submitted Sucessfully',
+            description: 'Welcome to TutorHero!',
           });
           navigateTo('overview')
         }">
@@ -43,9 +43,6 @@ const { $firebaseAuth, $firebaseDataConnect } = useNuxtApp();
 
 const authStore = useAuthStore()
 const { user } = storeToRefs(authStore)
-const email = ref(user.email)
-const name = ref(user.displayName)
-const number = ref(user.phoneNumber)
 
 const tutortypes = {
   hybrid: "Hybrid",
@@ -59,9 +56,9 @@ const genders = {
 }
 
 
-function FormSubmit(data) {
-  tutorStore.createTutor(data)
-  tutors.value = tutorStore.tutors
+const submitForm = async (data) => {
+  await tutorStore.createTutor(data)
+  tutors.value = tutorStore.tutor
 }
 
 const schema = z.object({

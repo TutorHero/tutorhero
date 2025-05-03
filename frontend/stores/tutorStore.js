@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { createTutor, getTutor } from '@firebasegen/default-connector';
+import { createTutor, getCurrentTutor, getAllTutors } from '@firebasegen/default-connector';
 
 
 // Call the `listAllTutors()` function to execute the query.
@@ -9,15 +9,23 @@ import { createTutor, getTutor } from '@firebasegen/default-connector';
 export const useTutorStore = defineStore('tutorStore', {
     state: () => {
         return {
-            tutors: [],
+            tutor: {},
         }
     },
     actions: {
-        async fetchAllTutors() {
+        async getCurrentTutor() {
             try {
-                const { data } = await getTutor();
-                this.tutors = data;
-                console.log(data)
+                const { data } = await getCurrentTutor();
+                this.tutor = data;
+                return this.tutor;
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        async getAllTutors() {
+            try {
+                const { data } = await getAllTutors();
+                return data;
             } catch (error) {
                 console.log(error)
             }
@@ -25,9 +33,11 @@ export const useTutorStore = defineStore('tutorStore', {
         async createTutor(tutor) {
             try {
                 const { data } = await createTutor(tutor);
+                this.tutor= data;
+                return this.tutor;
             } catch (error) {
                 console.log(error);
             }
-        },
+        }
     }
 })

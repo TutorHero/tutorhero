@@ -23,24 +23,17 @@ type Tutor @table(key: "id") {
   address: String
 }
 
-type RegistrationLink @table(key: ["id"]) {
+type StudentFormURL @table(key: ["id"]) {
   id: UUID! @default(expr: "uuidV4()")
   tutor: Tutor!
-  expiryDate: Timestamp!
+  createdAt: Timestamp! @default(expr:"request.time")
   submitted: Boolean! @default(value: false)
 }
 
-type Subject @table(key:["id"]){
-  id: UUID! @default(expr:"uuidV4()")
-  name: String!
-}
+# add logic
 type StudentSubject @table(key:["student","subject"]) {
   student: Student!
-  subject: Subject!
+  subject: String!
 }
 
-type TutorSubject @table(key:["tutor","subject"]){
-  tutor: Tutor!
-  subject: Subject!
-}
 

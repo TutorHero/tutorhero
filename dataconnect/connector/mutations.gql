@@ -1,4 +1,4 @@
-mutation UpdateTutor(
+mutation updateTutor(
   $name: String!
   $type: String!
   $gender: String!
@@ -98,27 +98,8 @@ mutation updateStudent(
   )
 }
 
-mutation createRegistrationLink($expiryDate: Timestamp!) @auth(level: USER) {
-  registrationLink_insert(
-    data: { tutorId_expr: "auth.uid", expiryDate: $expiryDate }
-  )
-}
-
-mutation cleanRegistrationLinks @auth(level: NO_ACCESS) {
-  registrationLink_deleteMany(
-    where: { expiryDate: { lt_expr: "request.time" } }
-  )
-}
-mutation createSubject($name: String!) @auth(level: USER) {
-  subject_insert(data:{
-    name:$name
-  }
-  )
-}
-
-mutation createTutorSubject($subjectId: UUID!)
-@auth(level: USER) {
-  tutorSubject_insert(
-    data: { tutorId_expr: "auth.uid", subjectId: $subjectId  }
+mutation createStudentFormURL @auth(level: USER) {
+  studentFormURL_insert(
+    data: { tutorId_expr: "auth.uid"}
   )
 }

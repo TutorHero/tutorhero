@@ -5,6 +5,7 @@ type Student @table(key: ["id"]) {
   gender: String! # "male" or "female"
   dob: Date!
   school: String!
+  year: String!
   email: String!
   phoneNo: String!
   address: String!
@@ -31,9 +32,12 @@ type StudentFormURL @table(key: ["id"]) {
 }
 
 # add logic
-type StudentSubject @table(key:["student","subject"]) {
+type TutorStudentSubject @table (key: ["student", "tutor"]) {
+  tutor: Tutor!
   student: Student!
   subject: String!
+  rate: Float!
+
 }
 
 

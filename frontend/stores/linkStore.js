@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { createRegistrationLink, isUrlValid } from '@firebasegen/default-connector';
+import { createStudentFormUrl, isUrlValid } from '@firebasegen/default-connector';
 
 
 
@@ -19,8 +19,9 @@ export const useLinkStore = defineStore('linkStore', {
             try {
                 console.log(date)
                 const expiryDate  = new Date(date.getTime() + 1 * 24 * 60 * 60 * 1000);
-                const { data } = await createRegistrationLink({expiryDate});
-                this.link = data.registrationLink_insert.id;
+                const { data } = await createStudentFormUrl({expiryDate})
+                this.link = data.studentFormUrl_insert.id;
+                console.log(this.link)
             } catch (error) {
                 console.log(error)
             }

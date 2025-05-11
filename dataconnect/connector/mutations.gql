@@ -46,6 +46,7 @@ mutation createStudent(
   $dob: Date!
   $school: String!
   $email: String!
+  $year: String!
   $phoneNo: String!
   $address: String!
   $status: String!
@@ -57,6 +58,7 @@ mutation createStudent(
       type: $type
       gender: $gender
       dob: $dob
+      year: $year
       school: $school
       email: $email
       phoneNo: $phoneNo
@@ -76,6 +78,7 @@ mutation updateStudent(
   $dob: Date!
   $school: String!
   $email: String!
+  $year: String!
   $phoneNo: String!
   $address: String!
   $status: String!
@@ -88,6 +91,7 @@ mutation updateStudent(
       type: $type
       gender: $gender
       dob: $dob
+      year:$year
       school: $school
       email: $email
       phoneNo: $phoneNo
@@ -101,5 +105,17 @@ mutation updateStudent(
 mutation createStudentFormURL @auth(level: USER) {
   studentFormURL_insert(
     data: { tutorId_expr: "auth.uid"}
+  )
+}
+
+
+mutation createTutorStudentSubject($studentId:UUID! $subject:String! $rate:Float!) @auth(level:USER){
+  tutorStudentSubject_insert(
+    data:{
+      tutorId_expr : "auth.uid" 
+      studentId : $studentId
+      subject : $subject
+      rate : $rate
+    }
   )
 }

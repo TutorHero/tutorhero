@@ -48,9 +48,8 @@ mutation createStudent(
   $email: String!
   $year: String!
   $phoneNo: String!
-  $address: String!
+  $address: String
   $status: String!
-  $tuitionLoc: String!
 ) @auth(level: USER) {
   student_insert(
     data: {
@@ -64,7 +63,6 @@ mutation createStudent(
       phoneNo: $phoneNo
       address: $address
       status: $status
-      tuitionLoc: $tuitionLoc
       tutorId_expr: "auth.uid"
     }
   )
@@ -80,9 +78,8 @@ mutation updateStudent(
   $email: String!
   $year: String!
   $phoneNo: String!
-  $address: String!
+  $address: String
   $status: String!
-  $tuitionLoc: String!
 ) @auth(level: USER) {
   student_update(
     first: { where: { tutorId: { eq_expr: "auth.uid" }, id: { eq: $id } } }
@@ -97,7 +94,6 @@ mutation updateStudent(
       phoneNo: $phoneNo
       address: $address
       status: $status
-      tuitionLoc: $tuitionLoc
     }
   )
 }

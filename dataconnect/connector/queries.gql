@@ -49,7 +49,6 @@ query getTutorStudents @auth(level: USER) {
     phoneNo
     address
     status
-    tuitionLoc
     subjects: tutorStudentSubjects_on_student {
       subject
     }
@@ -71,7 +70,6 @@ query getStudentbyName($name:String!) @auth(level:USER){
     year
     address
     status
-    tuitionLoc
     subjects: tutorStudentSubjects_on_student {
       subject
     }

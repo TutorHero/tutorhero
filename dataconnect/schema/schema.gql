@@ -8,9 +8,8 @@ type Student @table(key: ["id"]) {
   year: String!
   email: String!
   phoneNo: String!
-  address: String!
+  address: String
   status: String!
-  tuitionLoc: String!
   tutor: Tutor!
 }
 

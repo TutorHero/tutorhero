@@ -1,17 +1,16 @@
-mutation UpdateTutor (
-  $id: UUID!
+mutation updateTutor(
   $name: String!
-  $tutortype: String!
+  $type: String!
   $gender: String!
   $email: String!
   $phoneNo: String!
   $address: String!
-)@auth(level: PUBLIC) {
+) @auth(level: USER) {
   tutor_update(
-    id: $id
+    first: { where: { id: { eq_expr: "auth.uid" } } }
     data: {
       name: $name
-      tutortype: $tutortype
+      type: $type
       gender: $gender
       email: $email
       phoneNo: $phoneNo
@@ -20,22 +19,106 @@ mutation UpdateTutor (
   )
 }
 
-mutation AddTutor (
+mutation createTutor(
   $name: String!
-  $tutortype: String!
+  $type: String!
   $gender: String!
   $email: String!
   $phoneNo: String!
   $address: String!
-) @auth(level: PUBLIC){
+) @auth(level: PUBLIC) {
   tutor_insert(
     data: {
       name: $name
-      tutortype: $tutortype
+      type: $type
       gender: $gender
       email: $email
       phoneNo: $phoneNo
       address: $address
+    }
+  )
+}
+
+mutation createStudent(
+  $name: String!
+  $type: String! # "online" or "onsite"
+  $gender: String! # "male" or "female"
+  $dob: Date!
+  $school: String!
+  $email: String!
+  $year: String!
+  $phoneNo: String!
+  $address: String
+  $status: String!
+  $tutorId: String!
+) @auth(level: PUBLIC) {
+  student_insert(
+    data: {
+      name: $name
+      type: $type
+      gender: $gender
+      dob: $dob
+      year: $year
+      school: $school
+      email: $email
+      phoneNo: $phoneNo
+      address: $address
+      status: $status
+      tutorId: $tutorId
+    }
+  )
+}
+
+mutation updateStudent(
+  $id: UUID
+  $name: String!
+  $type: String! # "online" or "onsite"
+  $gender: String! # "male" or "female"
+  $dob: Date!
+  $school: String!
+  $email: String!
+  $year: String!
+  $phoneNo: String!
+  $address: String
+  $status: String!
+) @auth(level: USER) {
+  student_update(
+    first: { where: { tutorId: { eq_expr: "auth.uid" }, id: { eq: $id } } }
+    data: {
+      name: $name
+      type: $type
+      gender: $gender
+      dob: $dob
+      year:$year
+      school: $school
+      email: $email
+      phoneNo: $phoneNo
+      address: $address
+      status: $status
+    }
+  )
+}
+
+mutation createStudentFormURL @auth(level: USER) {
+  studentFormURL_insert(
+    data: { tutorId_expr: "auth.uid"}
+  )
+}
+
+mutation deleteStudentFormURL($id:UUID!) @auth(level:PUBLIC){
+  studentFormURL_delete(
+    id: $id
+  )
+}
+
+
+mutation createTutorStudentSubject($studentId:UUID! $subject:String! $rate:Float!) @auth(level:USER){
+  tutorStudentSubject_insert(
+    data:{
+      tutorId_expr : "auth.uid" 
+      studentId : $studentId
+      subject : $subject
+      rate : $rate
     }
   )
 }

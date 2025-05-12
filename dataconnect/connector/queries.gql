@@ -1,8 +1,20 @@
-query ListAllTutors @auth(level: PUBLIC) {
+query getCurrentTutor @auth(level: USER) {
+  tutors(where: { id: { eq_expr: "auth.uid" } }, limit: 1) {
+    id
+    name
+    type
+    gender
+    email
+    phoneNo
+    address
+  }
+}
+
+query getAllTutors @auth(level: PUBLIC) {
   tutors {
     id
     name
-    tutortype
+    type
     gender
     email
     phoneNo
@@ -10,15 +22,67 @@ query ListAllTutors @auth(level: PUBLIC) {
   }
 }
 
-query ListTutorByName($name: String!) @auth(level: PUBLIC) {
+query getTutorByName($name: String!) @auth(level: PUBLIC) {
   tutors(where: { name: { eq: $name } }) {
     id
     name
-    tutortype
+    type
     gender
     email
     phoneNo
     address
+    subjects: tutorStudentSubjects_on_tutor {
+      subject 
+    }
   }
 }
 
+query getTutorStudents @auth(level: USER) {
+  students(where: { tutor: { id: { eq_expr: "auth.uid" } } }) {
+    id
+    name
+    type
+    gender
+    dob
+    email
+    year
+    phoneNo
+    address
+    status
+    subjects: tutorStudentSubjects_on_student {
+      subject
+    }
+  }
+}
+
+query getStudentbyName($name:String!) @auth(level:USER){
+  students(where:
+  {tutorId:{eq_expr:"auth.uid"} 
+  name:{eq:$name}})
+  {
+    id
+    name
+    type
+    gender
+    dob
+    email
+    phoneNo
+    year
+    address
+    status
+    subjects: tutorStudentSubjects_on_student {
+      subject
+    }
+  }
+}
+
+query isUrlValid($id: UUID!) @auth(level: PUBLIC) {
+  studentFormURLS(where: { id: { eq: $id } }) {
+    id
+    tutor {
+      id
+      name
+      type
+    }
+  }
+}

@@ -5,21 +5,37 @@ type Student @table(key: ["id"]) {
   gender: String! # "male" or "female"
   dob: Date!
   school: String!
+  year: String!
   email: String!
   phoneNo: String!
-  address: String!
+  address: String
   status: String!
-  tuitionLoc: String!
-  tutor: Tutor! 
+  tutor: Tutor!
 }
 
-type Tutor @table(key:"id"){
-  id: UUID! @default(expr: "uuidV4()")
+type Tutor @table(key: "id") {
+  id: String! @default(expr: "auth.uid")
   name: String!
-  tutortype: String   # "online" or "onsite"
+  type: String # "online" or "onsite"
   gender: String # "male" or "female"
   email: String
   phoneNo: String
   address: String
 }
+
+type StudentFormURL @table(key: ["id"]) {
+  id: UUID! @default(expr: "uuidV4()")
+  tutor: Tutor!
+  createdAt: Timestamp! @default(expr:"request.time")
+}
+
+# add logic
+type TutorStudentSubject @table (key: ["student", "tutor"]) {
+  tutor: Tutor!
+  student: Student!
+  subject: String!
+  rate: Float!
+
+}
+
 

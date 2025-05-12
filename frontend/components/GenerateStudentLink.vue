@@ -25,7 +25,7 @@
                 <div>Copied</div>
                 <div><svg fill="#ffffff" height="200px" width="200px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <polygon points="437.3,30 202.7,339.3 64,200.7 0,264.7 213.3,478 512,94 "></polygon> </g></svg></div>
               </div>
-            </button>
+            </Button>
           </div>
         </div>
       </DialogContent>
@@ -42,6 +42,7 @@ const copied = ref(false)
 const link = ref('')
 
 const generateLink = async () => {
+  copied.value = false
   const { data: { studentFormURL_insert: { id } } } = await createStudentFormUrl()
   url.value = "http://localhost:3000/student-form?id=" + id
 }
@@ -49,7 +50,6 @@ const generateLink = async () => {
 const copyLink = () => {
   navigator.clipboard.writeText(url.value);
   copied.value = !copied.value
-  console.log(copied)
 }
 </script>
 <style>

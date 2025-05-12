@@ -28,7 +28,6 @@ const tutorStore = useTutorStore()
 
 const signIn = async (auth) => {
   await $firebaseSignIn()
-  const { tutors } = await tutorStore.getCurrentTutor()
   if (!!tutors.length) {
     await navigateTo('overview')
   } else {

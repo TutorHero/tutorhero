@@ -7,6 +7,13 @@
         targetField: 'otheryear',
         // Ensure this matches the exact string in your enum
         when: (yearValue) => yearValue !== 'Others: Please specify below'
+      },
+      {
+        sourceField: 'type',
+        type: DependencyType.HIDES,
+        targetField: 'address',
+        // Ensure this matches the exact string in your enum
+        when: (type) => type === 'Online'
       }
     ]" @submit="(data) => {
       submitForm(data)
@@ -31,13 +38,10 @@ const students = ref([])
 const { $firebaseAuth, $firebaseDataConnect } = useNuxtApp();
 const { toast } = useToast()
 
-onMounted(() => {
-  const route = useRoute()
-  const link = route.query.id
-})
+const route = useRoute()
+const link = route.query.id
 
 const submitForm = async (data) => {
-  console.log("hjere")
   data["dob"] = data["dob"].toISOString().split('T')[0]
   data["status"] = "current"
   if (data["year"] === "Others: Please specify below") {
@@ -45,7 +49,7 @@ const submitForm = async (data) => {
   }
 
   await studentStore.createStudent(data)
-  students.value = studentStore.students
+
   toast({
     description: 'Data Submitted Successfully',
   });
@@ -56,7 +60,7 @@ const submitForm = async (data) => {
 const schema = z.object({
   name: z.string({ required_error: 'Name is required.' }),
   email: z.string().email(),
-  type: z.enum(["Online", "Face to face", "Hybrid"]).describe("Type of student"),
+  type: z.enum(["Online", "Face to face", "Hybrid"]).describe("Type of tuition"),
   school: z.string().describe('School'),
   year: z.enum([
     "Primary 1", "Primary 2", "Primary 3", "Primary 4", "Primary 5", "Primary 6",
@@ -64,12 +68,11 @@ const schema = z.object({
     "Junior College 1", "Junior College 2", "Junior College 3",
     "Others: Please specify below"
   ]).describe("Year of study"),
-  otheryear: z.string().optional().describe("Specify here"), 
+  otheryear: z.string().describe("Specify here").optional(), 
   dob: z.coerce.date().describe("Date of Birth"),
   gender: z.enum(["Male", "Female"]),
   phoneNo: z.string().describe("Phone number"),
-  address: z.string().describe("Address"),
-  tuitionLoc: z.string().describe("Tuition Location")
+  address: z.string().describe("Address").optional(),
 }).superRefine((data, ctx) => {
   if (data.year === "Others: Please specify below") {
     if (!data.otheryear || data.otheryear.trim() === "") {
@@ -84,8 +87,5 @@ const schema = z.object({
 
 const form = useForm({
   validationSchema: toTypedSchema(schema),
-
 });
-
-
 </script>

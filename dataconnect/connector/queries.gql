@@ -5,7 +5,7 @@ query getCurrentTutor @auth(level: USER) {
     type
     gender
     email
-    phoneNo
+    phoneNumber
     address
   }
 }
@@ -17,7 +17,7 @@ query getAllTutors @auth(level: PUBLIC) {
     type
     gender
     email
-    phoneNo
+    phoneNumber
     address
   }
 }
@@ -29,7 +29,7 @@ query getTutorByName($name: String!) @auth(level: PUBLIC) {
     type
     gender
     email
-    phoneNo
+    phoneNumber
     address
     subjects: tutorStudentSubjects_on_tutor {
       subject 
@@ -46,7 +46,8 @@ query getTutorStudents @auth(level: USER) {
     dob
     email
     year
-    phoneNo
+    phoneNumber
+    parentPhoneNumber
     address
     status
     subjects: tutorStudentSubjects_on_student {
@@ -66,7 +67,8 @@ query getStudentbyName($name:String!) @auth(level:USER){
     gender
     dob
     email
-    phoneNo
+    phoneNumber
+    parentPhoneNumber
     year
     address
     status

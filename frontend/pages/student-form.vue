@@ -103,7 +103,8 @@ const schema = z.object({
   otheryear: z.string().describe("Specify here").optional(), 
   dob: z.coerce.date().describe("Date of Birth"),
   gender: z.enum(["Male", "Female"]),
-  phoneNo: z.string().describe("Phone number"),
+  phoneNumber: z.string().describe("Student Phone number").optional(),
+  parentPhoneNumber: z.string().describe("Parent Phone number").optional(),
   address: z.string().describe("Address").optional(),
 }).superRefine((data, ctx) => {
   if (data.year === "Others: Please specify below") {

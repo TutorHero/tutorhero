@@ -66,7 +66,7 @@ const schema = z.object({
   name: z.string({required_error: 'Name is required.',}),
   type: z.nativeEnum(tutortypes).describe('Type of tutor eg. Online, Face to face'),
   gender: z.nativeEnum(genders).describe("Gender"),
-  phoneNo: z.string().describe("Phone Number"),
+  phoneNumber: z.string().describe("Phone Number"),
   address: z.string().describe("Address")
 })
 

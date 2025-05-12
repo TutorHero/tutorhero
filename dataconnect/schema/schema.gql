@@ -7,7 +7,8 @@ type Student @table(key: ["id"]) {
   school: String!
   year: String!
   email: String!
-  phoneNo: String!
+  phoneNumber: String
+  parentPhoneNumber: String
   address: String
   status: String!
   tutor: Tutor!
@@ -19,7 +20,7 @@ type Tutor @table(key: "id") {
   type: String # "online" or "onsite"
   gender: String # "male" or "female"
   email: String
-  phoneNo: String
+  phoneNumber: String
   address: String
 }
 

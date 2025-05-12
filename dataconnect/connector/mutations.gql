@@ -3,7 +3,7 @@ mutation updateTutor(
   $type: String!
   $gender: String!
   $email: String!
-  $phoneNo: String!
+  $phoneNumber: String!
   $address: String!
 ) @auth(level: USER) {
   tutor_update(
@@ -13,7 +13,7 @@ mutation updateTutor(
       type: $type
       gender: $gender
       email: $email
-      phoneNo: $phoneNo
+      phoneNumber: $phoneNumber
       address: $address
     }
   )
@@ -24,7 +24,7 @@ mutation createTutor(
   $type: String!
   $gender: String!
   $email: String!
-  $phoneNo: String!
+  $phoneNumber: String!
   $address: String!
 ) @auth(level: PUBLIC) {
   tutor_insert(
@@ -33,7 +33,7 @@ mutation createTutor(
       type: $type
       gender: $gender
       email: $email
-      phoneNo: $phoneNo
+      phoneNumber: $phoneNumber
       address: $address
     }
   )
@@ -47,7 +47,8 @@ mutation createStudent(
   $school: String!
   $email: String!
   $year: String!
-  $phoneNo: String!
+  $phoneNumber: String
+  $parentPhoneNumber: String
   $address: String
   $status: String!
   $tutorId: String!
@@ -61,7 +62,8 @@ mutation createStudent(
       year: $year
       school: $school
       email: $email
-      phoneNo: $phoneNo
+      phoneNumber: $phoneNumber
+      parentPhoneNumber: $parentPhoneNumber
       address: $address
       status: $status
       tutorId: $tutorId
@@ -78,7 +80,8 @@ mutation updateStudent(
   $school: String!
   $email: String!
   $year: String!
-  $phoneNo: String!
+  $phoneNumber: String!
+  $parentPhoneNumber: String!
   $address: String
   $status: String!
 ) @auth(level: USER) {
@@ -92,7 +95,8 @@ mutation updateStudent(
       year:$year
       school: $school
       email: $email
-      phoneNo: $phoneNo
+      phoneNumber: $phoneNumber
+      parentPhoneNumber: $parentPhoneNumber
       address: $address
       status: $status
     }
@@ -110,7 +114,6 @@ mutation deleteStudentFormURL($id:UUID!) @auth(level:PUBLIC){
     id: $id
   )
 }
-
 
 mutation createTutorStudentSubject($studentId:UUID! $subject:String! $rate:Float!) @auth(level:USER){
   tutorStudentSubject_insert(

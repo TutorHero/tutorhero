@@ -79,7 +79,6 @@ query getStudentbyName($name:String!) @auth(level:USER){
 query isUrlValid($id: UUID!) @auth(level: PUBLIC) {
   studentFormURLS(where: { id: { eq: $id } }) {
     id
-    submitted
     tutor {
       id
       name

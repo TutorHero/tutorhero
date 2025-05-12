@@ -50,7 +50,8 @@ mutation createStudent(
   $phoneNo: String!
   $address: String
   $status: String!
-) @auth(level: USER) {
+  $tutorId: String!
+) @auth(level: PUBLIC) {
   student_insert(
     data: {
       name: $name
@@ -63,7 +64,7 @@ mutation createStudent(
       phoneNo: $phoneNo
       address: $address
       status: $status
-      tutorId_expr: "auth.uid"
+      tutorId: $tutorId
     }
   )
 }
@@ -101,6 +102,12 @@ mutation updateStudent(
 mutation createStudentFormURL @auth(level: USER) {
   studentFormURL_insert(
     data: { tutorId_expr: "auth.uid"}
+  )
+}
+
+mutation deleteStudentFormURL($id:UUID!) @auth(level:PUBLIC){
+  studentFormURL_delete(
+    id: $id
   )
 }
 

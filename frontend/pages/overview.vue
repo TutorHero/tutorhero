@@ -10,5 +10,7 @@
 </template>
 
 <script setup>
-
+import { getTutorStudents } from '@firebasegen/default-connector'
+const { data } = await getTutorStudents()
+console.log(data)
 </script>

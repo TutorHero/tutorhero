@@ -26,7 +26,6 @@ export const useStudentStore = defineStore('studentStore', {
       try {
         const { data } = await createStudent(student);
         console.log("here ran", data);
-        await this.fetchAllStudents();
       } catch (error) {
         console.log(error);
       }

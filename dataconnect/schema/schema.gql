@@ -27,7 +27,6 @@ type StudentFormURL @table(key: ["id"]) {
   id: UUID! @default(expr: "uuidV4()")
   tutor: Tutor!
   createdAt: Timestamp! @default(expr:"request.time")
-  submitted: Boolean! @default(value: false)
 }
 
 # add logic

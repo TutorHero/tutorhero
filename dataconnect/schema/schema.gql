@@ -31,12 +31,14 @@ type StudentFormURL @table(key: ["id"]) {
 }
 
 # add logic
-type TutorStudentSubject @table (key: ["student", "tutor"]) {
+type TutorStudentSubject @table (key: ["student", "tutor","subject"]) {
   tutor: Tutor!
   student: Student!
   subject: String!
+  startTime: Timestamp!
+  endTime: Timestamp!
+  interval: Int! #milliseconds
   rate: Float!
-
 }
 
 

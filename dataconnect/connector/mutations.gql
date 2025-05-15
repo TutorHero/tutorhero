@@ -115,13 +115,16 @@ mutation deleteStudentFormURL($id:UUID!) @auth(level:PUBLIC){
   )
 }
 
-mutation createTutorStudentSubject($studentId:UUID! $subject:String! $rate:Float!) @auth(level:USER){
+mutation createTutorStudentSubject($studentId:UUID! $subject:String! $rate:Float! $startTime:Timestamp! $endTime: Timestamp! $interval: Int!) @auth(level:USER){
   tutorStudentSubject_insert(
     data:{
       tutorId_expr : "auth.uid" 
       studentId : $studentId
       subject : $subject
       rate : $rate
+      startTime : $startTime
+      endTime : $endTime
+      interval: $interval
     }
   )
 }

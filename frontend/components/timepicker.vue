@@ -35,7 +35,7 @@ const selectedTime = ref('')
 
 const timeOptions = computed(() => {
   const times = []
-  for (let h = 0; h <= 24; h++) {
+  for (let h = 0; h <= 23; h++) {
     times.push(`${String(h).padStart(2, '0')}:00`)
     times.push(`${String(h).padStart(2, '0')}:15`)
     times.push(`${String(h).padStart(2, '0')}:30`)

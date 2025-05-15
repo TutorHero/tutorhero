@@ -32,7 +32,11 @@ query getTutorByName($name: String!) @auth(level: PUBLIC) {
     phoneNumber
     address
     subjects: tutorStudentSubjects_on_tutor {
-      subject 
+      subject
+      startTime
+      endTime
+      interval
+      rate
     }
   }
 }
@@ -52,6 +56,10 @@ query getTutorStudents @auth(level: USER) {
     status
     subjects: tutorStudentSubjects_on_student {
       subject
+      startTime
+      endTime
+      interval
+      rate
     }
   }
 }
@@ -74,6 +82,10 @@ query getStudentbyName($name:String!) @auth(level:USER){
     status
     subjects: tutorStudentSubjects_on_student {
       subject
+      startTime
+      endTime
+      interval
+      rate
     }
   }
 }

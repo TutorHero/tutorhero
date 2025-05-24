@@ -30,7 +30,7 @@
           <Button type="submit"  variant="outline" class="mt-4">Submit</Button>
         </div>
       </AutoForm>
-
+      
       <Card class="p-12 flex flex-col items-center" v-else>
         <ClockAlert class="w-24 h-24 mb-5 stroke-amber-500" />
         <p class="text-2xl">This form has expired.</p>

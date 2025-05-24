@@ -7,6 +7,7 @@ import { useLinkStore } from '../stores/linkStore';
 const { $firebaseAuth, $firebaseDataConnect } = useNuxtApp();
 import { getTutorStudents, createTutorStudentSubject, getStudentbyName } from '@firebasegen/default-connector'
 const linkStore = useLinkStore();
+import axios from 'axios'
 onMounted(async () => {
   const {data:{students}} = await getStudentbyName({name:"jerryl"})
   console.log(students[0].id)

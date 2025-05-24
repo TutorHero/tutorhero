@@ -75,3 +75,5 @@ node_modules/
 .firebase
 .output  
 .nuxt
+
+.DS_Store

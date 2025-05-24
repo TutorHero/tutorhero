@@ -2,8 +2,6 @@ import { defineStore } from 'pinia'
 import { createStudent, getTutorStudents, createTutorStudentSubject } from '@firebasegen/default-connector';
 
 
-// Call the `listAllTutors()` function to execute the query.
-// You can use the `await` keyword to wait for the promise to resolve.
 
 
 export const useStudentStore = defineStore('studentStore', {

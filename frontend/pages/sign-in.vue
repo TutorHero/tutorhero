@@ -25,15 +25,16 @@ definePageMeta({ layout: false });
 const { $firebaseSignIn } = useNuxtApp();
 
 const tutorStore = useTutorStore()
+const authStore = useAuthStore()
 
 const signIn = async (auth) => {
   await $firebaseSignIn()
+  console.log(authStore.user)
   const { tutors } = await tutorStore.getCurrentTutor()
-
   if (!!tutors.length) {
-    await navigateTo('overview')
+    await navigateTo('/overview')
   } else {
-    await navigateTo('tutor-form')
+    await navigateTo('/tutor-form')
   }
 }
 

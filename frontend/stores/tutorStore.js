@@ -16,6 +16,7 @@ export const useTutorStore = defineStore('tutorStore', {
         async getCurrentTutor() {
             try {
                 const { data } = await getCurrentTutor();
+                console.log(data)
                 this.tutor = data;
                 return this.tutor;
             } catch (error) {

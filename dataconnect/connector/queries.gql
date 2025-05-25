@@ -7,6 +7,7 @@ query getCurrentTutor @auth(level: USER) {
     email
     phoneNumber
     address
+    calendarId
   }
 }
 
@@ -19,6 +20,7 @@ query getAllTutors @auth(level: PUBLIC) {
     email
     phoneNumber
     address
+    calendarId
   }
 }
 
@@ -64,11 +66,8 @@ query getTutorStudents @auth(level: USER) {
   }
 }
 
-query getStudentbyName($name:String!) @auth(level:USER){
-  students(where:
-  {tutorId:{eq_expr:"auth.uid"} 
-  name:{eq:$name}})
-  {
+query getStudentbyName($name: String!) @auth(level: USER) {
+  students(where: { tutorId: { eq_expr: "auth.uid" }, name: { eq: $name } }) {
     id
     name
     type

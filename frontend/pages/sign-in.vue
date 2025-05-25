@@ -30,8 +30,8 @@ const authStore = useAuthStore()
 const signIn = async (auth) => {
   await $firebaseSignIn()
   console.log(authStore.user)
-  const { tutors } = await tutorStore.getCurrentTutor()
-  if (!!tutors.length) {
+  const tutor = await tutorStore.getCurrentTutor()
+  if (tutor) {
     await navigateTo('/overview')
   } else {
     await navigateTo('/tutor-form')

@@ -14,7 +14,6 @@ export const useStudentStore = defineStore('studentStore', {
     async fetchAllStudents() {
       try {
         const { data: {students} } = await getTutorStudents();
-        console.log(students)
         this.students = students;
       } catch (error) {
         console.log(error)

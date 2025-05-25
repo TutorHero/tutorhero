@@ -22,6 +22,7 @@ type Tutor @table(key: "id") {
   email: String
   phoneNumber: String
   address: String
+  calendarId: String
 }
 
 type StudentFormURL @table(key: ["id"]) {
@@ -39,6 +40,8 @@ type TutorStudentSubject @table (key: ["student", "tutor","subject"]) {
   endTime: Timestamp!
   interval: Int! #milliseconds
   rate: Float!
+  eventId: String
+  recurrence: String
 }
 
 

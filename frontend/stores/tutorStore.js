@@ -1,23 +1,24 @@
 import { defineStore } from 'pinia'
-import { createTutor, getCurrentTutor, getAllTutors } from '@firebasegen/default-connector';
+import { createTutor, getCurrentTutor, getAllTutors, updateTutor } from '@firebasegen/default-connector';
 
 
-// Call the `listAllTutors()` function to execute the query.
-// You can use the `await` keyword to wait for the promise to resolve.
 
 
 export const useTutorStore = defineStore('tutorStore', {
     state: () => {
         return {
-            tutor: {},
+            tutor: null,
         }
     },
     actions: {
         async getCurrentTutor() {
             try {
-                const { data } = await getCurrentTutor();
-                console.log(data)
-                this.tutor = data;
+                const { data: { tutors } } = await getCurrentTutor();
+                const currentTutor = tutors
+                console.log(currentTutor)
+                if (currentTutor.length > 0) {
+                    this.tutor = currentTutor[0]
+                }
                 return this.tutor;
             } catch (error) {
                 console.log(error)
@@ -33,11 +34,21 @@ export const useTutorStore = defineStore('tutorStore', {
         },
         async createTutor(tutor) {
             try {
-                const { data } = await createTutor(tutor);
-                this.tutor= data;
+                await createTutor(tutor);
+                await this.getCurrentTutor()
                 return this.tutor;
             } catch (error) {
                 console.log(error);
+            }
+        },
+        async updateTutor(tutor) {
+            try {
+                await updateTutor(tutor)
+                await this.getCurrentTutor()
+                return this.tutor;
+
+            } catch (error) {
+                console.log(error)
             }
         }
     }

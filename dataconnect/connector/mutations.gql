@@ -5,6 +5,7 @@ mutation updateTutor(
   $email: String!
   $phoneNumber: String!
   $address: String!
+  $calendarId: String
 ) @auth(level: USER) {
   tutor_update(
     first: { where: { id: { eq_expr: "auth.uid" } } }
@@ -15,6 +16,7 @@ mutation updateTutor(
       email: $email
       phoneNumber: $phoneNumber
       address: $address
+      calendarId: $calendarId
     }
   )
 }
@@ -26,6 +28,7 @@ mutation createTutor(
   $email: String!
   $phoneNumber: String!
   $address: String!
+  $calendarId: String
 ) @auth(level: PUBLIC) {
   tutor_insert(
     data: {
@@ -35,6 +38,7 @@ mutation createTutor(
       email: $email
       phoneNumber: $phoneNumber
       address: $address
+      calendarId: $calendarId
     }
   )
 }
@@ -92,7 +96,7 @@ mutation updateStudent(
       type: $type
       gender: $gender
       dob: $dob
-      year:$year
+      year: $year
       school: $school
       email: $email
       phoneNumber: $phoneNumber
@@ -104,27 +108,34 @@ mutation updateStudent(
 }
 
 mutation createStudentFormURL @auth(level: USER) {
-  studentFormURL_insert(
-    data: { tutorId_expr: "auth.uid"}
-  )
+  studentFormURL_insert(data: { tutorId_expr: "auth.uid" })
 }
 
-mutation deleteStudentFormURL($id:UUID!) @auth(level:PUBLIC){
-  studentFormURL_delete(
-    id: $id
-  )
+mutation deleteStudentFormURL($id: UUID!) @auth(level: PUBLIC) {
+  studentFormURL_delete(id: $id)
 }
 
-mutation createTutorStudentSubject($studentId:UUID! $subject:String! $rate:Float! $startTime:Timestamp! $endTime: Timestamp! $interval: Int!) @auth(level:USER){
+mutation createTutorStudentSubject(
+  $studentId: UUID!
+  $subject: String!
+  $rate: Float!
+  $startTime: Timestamp!
+  $endTime: Timestamp!
+  $interval: Int!
+  $eventId: String
+  $recurrence: String
+) @auth(level: USER) {
   tutorStudentSubject_insert(
-    data:{
-      tutorId_expr : "auth.uid" 
-      studentId : $studentId
-      subject : $subject
-      rate : $rate
-      startTime : $startTime
-      endTime : $endTime
+    data: {
+      tutorId_expr: "auth.uid"
+      studentId: $studentId
+      subject: $subject
+      rate: $rate
+      startTime: $startTime
+      endTime: $endTime
       interval: $interval
+      eventId: $eventId
+      recurrence: $recurrence
     }
   )
 }

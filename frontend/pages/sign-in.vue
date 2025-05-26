@@ -31,6 +31,7 @@ const signIn = async (auth) => {
   await $firebaseSignIn()
   console.log(authStore.user)
   const tutor = await tutorStore.getCurrentTutor()
+  console.log(tutor)
   if (tutor) {
     await navigateTo('/overview')
   } else {

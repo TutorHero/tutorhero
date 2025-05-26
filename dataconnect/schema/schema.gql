@@ -32,16 +32,25 @@ type StudentFormURL @table(key: ["id"]) {
 }
 
 # add logic
-type TutorStudentSubject @table (key: ["student", "tutor","subject"]) {
+type TutorStudentSubject @table (key: ["id"]) {
+  id: UUID! @default(expr: "uuidV4()")
   tutor: Tutor!
   student: Student!
   subject: String!
   startTime: Timestamp!
   endTime: Timestamp!
-  interval: Int! #milliseconds
+  interval: String! #RRULE
   rate: Float!
   eventId: String
   recurrence: String
 }
 
 
+type LessonEvent @table(key:["id"]) {
+  id: UUID! @default(expr: "uuidV4()")
+  tutorStudentSubject: TutorStudentSubject!
+  startTime: Timestamp!
+  endTime: Timestamp!
+  status: String! #"Scheduled", "Completed", "Cancelled", "Rescheduled"
+  notes: String
+}

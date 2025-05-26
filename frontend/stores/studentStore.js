@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { createStudent, getTutorStudents, createTutorStudentSubject } from '@firebasegen/default-connector';
+import { createStudent, getTutorStudents, createTutorStudentSubject, getStudentbyId } from '@firebasegen/default-connector';
 
 
 
@@ -22,6 +22,8 @@ export const useStudentStore = defineStore('studentStore', {
     async createStudent(student) {
       try {
         const { data } = await createStudent(student);
+        console.log(data)
+        return data.student_insert.id
       } catch (error) {
         console.log(error);
       }
@@ -29,6 +31,17 @@ export const useStudentStore = defineStore('studentStore', {
     async createSubject(subject) {
       try {
         const { data } = await createStudentStudentSubject(subject)
+      } catch (error) {
+        console.log(error);
+      }
+    }, // TODO: Subject Store
+    async getStudentbyId(id) {
+      try {
+        const { data : {students}} = await getStudentbyId({id})
+        console.log(students)
+        if (students.length > 0){
+          return students[0];
+        }
       } catch (error) {
         console.log(error);
       }

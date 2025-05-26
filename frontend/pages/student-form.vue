@@ -80,13 +80,11 @@ const submitForm = async (data) => {
   }
   data.tutorId = tutorId.value
 
-  await studentStore.createStudent(data)
-
   toast({
     description: 'Data Submitted Successfully',
   });
 
-  await deleteStudentFormUrl({id: formId})
+  await deleteStudentFormUrl({id: formId}) // TODO: UI to change page. either refresh or show success 
 }
 
 const schema = z.object({

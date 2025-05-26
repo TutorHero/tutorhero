@@ -52,7 +52,7 @@ const submitForm = async (data) => {
   console.log(tutors.value)
   console.log('here')
   await authStore.addCalendar()
-  await authStore.addEvent()
+
   toast({
     description: 'Welcome to TutorHero!',
   });

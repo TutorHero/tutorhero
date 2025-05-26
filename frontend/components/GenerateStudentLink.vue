@@ -44,7 +44,7 @@ const link = ref('')
 const generateLink = async () => {
   copied.value = false
   const { data: { studentFormURL_insert: { id } } } = await createStudentFormUrl()
-  url.value = "http://localhost:3000/student-form?id=" + id
+  url.value = "http://localhost:3000/student-form?id=" + id // TODO: ACCOUNT FOR PROD URL
 }
 
 const copyLink = () => {

@@ -121,7 +121,7 @@ mutation createTutorStudentSubject(
   $rate: Float!
   $startTime: Timestamp!
   $endTime: Timestamp!
-  $interval: Int!
+  $interval: String!
   $eventId: String
   $recurrence: String
 ) @auth(level: USER) {
@@ -136,6 +136,71 @@ mutation createTutorStudentSubject(
       interval: $interval
       eventId: $eventId
       recurrence: $recurrence
+    }
+  )
+}
+
+mutation updateTutorStudentSubject(
+  $id: UUID!
+  $studentId: UUID!
+  $subject: String!
+  $rate: Float!
+  $startTime: Timestamp!
+  $endTime: Timestamp!
+  $interval: String!
+  $eventId: String
+  $recurrence: String
+) @auth(level: USER) {
+  tutorStudentSubject_update(
+    first: { where: { tutorId: { eq_expr: "auth.uid" }, id: { eq: $id } } }
+    data: {
+      tutorId_expr: "auth.uid"
+      studentId: $studentId
+      subject: $subject
+      rate: $rate
+      startTime: $startTime
+      endTime: $endTime
+      interval: $interval
+      eventId: $eventId
+      recurrence: $recurrence
+    }
+  )
+}
+
+mutation createLessonEvent(
+  $tutorStudentSubjectId: UUID!
+  $startTime: Timestamp!
+  $endTime: Timestamp!
+  $status: String
+  $notes: String
+) @auth(level: USER) {
+  lessonEvent_insert(
+    data: {
+      tutorStudentSubjectId: $tutorStudentSubjectId
+      startTime: $startTime
+      endTime: $endTime
+      status: $status
+      notes: $notes
+    }
+  )
+}
+
+mutation updateLessonEvent(
+  $id: UUID!
+  $tutorStudentSubjectId: UUID!
+  $startTime: Timestamp!
+  $endTime: Timestamp!
+  $status: String
+  $notes: String
+) @auth(level: USER) {
+  lessonEvent_update(
+    first: { where: { id: { eq: $id } } }
+    data: {
+      tutorStudentSubjectId: $tutorStudentSubjectId
+      startTime: $startTime
+      endTime: $endTime
+      status: $status
+      notes: $notes
     }
   )
 }

@@ -98,6 +98,7 @@ const submitForm = async (data) => {
     console.log(selectedDays.value)
     await studentStore.createSubject(data)
     tutors.value = tutorStore.tutor
+    await authStore.addEvent("Science Tuition With John","2025-05-29T17:00:00","2025-05-29T17:18:30",id) //Adding events, pass in student id
 }
 
 const schema = z.object({

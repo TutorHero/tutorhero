@@ -89,6 +89,29 @@ query getStudentbyName($name: String!) @auth(level: USER) {
   }
 }
 
+query getStudentbyId($id: UUID!) @auth(level: USER) {
+  students(where: { tutorId: { eq_expr: "auth.uid" }, id: { eq: $id } }) {
+    id
+    name
+    type
+    gender
+    dob
+    email
+    phoneNumber
+    parentPhoneNumber
+    year
+    address
+    status
+    subjects: tutorStudentSubjects_on_student {
+      subject
+      startTime
+      endTime
+      interval
+      rate
+    }
+  }
+}
+
 query isUrlValid($id: UUID!) @auth(level: PUBLIC) {
   studentFormURLS(where: { id: { eq: $id } }) {
     id

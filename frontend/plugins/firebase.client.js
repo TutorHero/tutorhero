@@ -47,7 +47,7 @@ export default defineNuxtPlugin(() => {
 
   const dataConnect = getDataConnect(app, connectorConfig);
   console.log(process.env.NODE_ENV)
-  if (process.env.NODE_ENV === "DEVELOPMENT") {
+  if (process.env.NODE_ENV === "development") {
     connectDataConnectEmulator(dataConnect, "127.0.0.1", 9399);
     connectAuthEmulator(auth, "http://127.0.0.1:9099");
   }

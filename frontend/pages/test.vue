@@ -1,11 +1,10 @@
 <template>
   test
-  <img :src="imagelink"/>
+  <div id="qr"></div>
 </template>
 
 <script setup>
 const qrString = ref('')
-const imagelink = ref('')
 const generateQR = async () => {
   const { data, error } = await useFetch('/api/generatePaynow', {
     method: 'POST',
@@ -26,7 +25,7 @@ const generateQR = async () => {
     console.log('QR Payload:', qrString.value)
   }
 }
-import qrcode from 'qrcode'
+import QRCodeStyling from "qr-code-styling";
 import { useLinkStore } from '../stores/linkStore';
 const { $firebaseAuth, $firebaseDataConnect } = useNuxtApp();
 import { getTutorStudents, createTutorStudentSubject, getStudentbyName } from '@firebasegen/default-connector'
@@ -35,10 +34,32 @@ import axios from 'axios'
 onMounted(async () => {
   await generateQR()
   console.log(qrString.value)
-  qrcode.toDataURL(qrString.value, function (err, url) {
-    console.log(url)
-    imagelink.value = url
-  })
+  const qrCode = new QRCodeStyling({
+    width: 1000,
+    height: 1000,
+    data: qrString.value,
+    image: "/static/qrlogo.png", 
+    dotsOptions: {
+      color: "#0a2a52", 
+      type: "rounded"  
+    },
+    cornersSquareOptions: {
+      color: "#0a2a52",
+      type: "extra-rounded"
+    },
+    cornersDotOptions: {
+      color: "#0a2a52",
+      type: "dot"
+    },
+    imageOptions: {
+      crossOrigin: "anonymous",
+      imageSize: 0.5,
+    },
+    backgroundOptions: {
+      color: "#ffffff"
+    }
+  });
+  qrCode.append(document.getElementById("qr"));
   const { data: { students } } = await getStudentbyName({ name: "jerryl" })
   console.log(students[0].id)
   const date = new Date(Date.now()).toISOString()

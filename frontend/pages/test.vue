@@ -5,38 +5,20 @@
 
 <script setup>
 const qrString = ref('')
-const generateQR = async () => {
-  const { data, error } = await useFetch('/api/generatePaynow', {
-    method: 'POST',
-    body: {
-      proxyType: 'mobile',
-      proxyValue: '87782016',
-      editable: 'yes',
-      amount: 30.5,
-      merchant: 'Tuition Co',
-      remarks: 'Math tuition 2 June'
-    }
-  })
-
-  if (error.value) {
-    console.error('Error generating QR:', error.value)
-  } else {
-    qrString.value = data.value.qr
-    console.log('QR Payload:', qrString.value)
-  }
-}
 import QRCodeStyling from "qr-code-styling";
 import { useLinkStore } from '../stores/linkStore';
+const tutorStore = useTutorStore()
+const studentStore = useStudentStore()
 const { $firebaseAuth, $firebaseDataConnect } = useNuxtApp();
 import { getTutorStudents, createTutorStudentSubject, getStudentbyName } from '@firebasegen/default-connector'
 const linkStore = useLinkStore();
 import axios from 'axios'
 onMounted(async () => {
-  await generateQR()
+  qrString.value = await studentStore.generateQR('87782016',30,'Tuition fee')
   console.log(qrString.value)
   const qrCode = new QRCodeStyling({
-    width: 1000,
-    height: 1000,
+    width: 500,
+    height: 500,
     data: qrString.value,
     image: "/static/qrlogo.png", 
     dotsOptions: {
@@ -53,7 +35,7 @@ onMounted(async () => {
     },
     imageOptions: {
       crossOrigin: "anonymous",
-      imageSize: 0.5,
+      imageSize: 0.3,
     },
     backgroundOptions: {
       color: "#ffffff"

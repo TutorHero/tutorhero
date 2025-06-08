@@ -15,7 +15,6 @@ export const useTutorStore = defineStore('tutorStore', {
             try {
                 const { data: { tutors } } = await getCurrentTutor();
                 const currentTutor = tutors
-                console.log(currentTutor)
                 if (currentTutor.length > 0) {
                     this.tutor = currentTutor[0]
                 }

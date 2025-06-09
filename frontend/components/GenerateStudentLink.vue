@@ -1,7 +1,7 @@
 <template>
   <div>
     <Dialog>
-      <DialogTrigger as-child><Button variant="outline" @click="generateLink()">Generate Link</Button></DialogTrigger>
+      <DialogTrigger as-child><Button variant="outline" @click="generateLink()">Add Student</Button></DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Student Form</DialogTitle>

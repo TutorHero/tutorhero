@@ -25,13 +25,6 @@
               </NavigationMenuLink>
             </NuxtLink>
           </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NuxtLink v-slot="{ isActive, href, navigate }" to="/students" custom>
-              <NavigationMenuLink :active="isActive" :href="href" :class="navigationMenuTriggerStyle()" @click="navigate">
-                Students
-              </NavigationMenuLink>
-            </NuxtLink>
-          </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
     </div>

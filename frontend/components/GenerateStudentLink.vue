@@ -52,6 +52,3 @@ const copyLink = () => {
   copied.value = !copied.value
 }
 </script>
-<style>
-
-</style>

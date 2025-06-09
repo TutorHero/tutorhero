@@ -11,7 +11,7 @@ export const useStudentStore = defineStore('studentStore', {
     }
   },
   actions: {
-    async fetchAllStudents() {
+    async getAllStudents() {
       try {
         const { data: { students } } = await getTutorStudents();
         this.students = students;
@@ -37,7 +37,6 @@ export const useStudentStore = defineStore('studentStore', {
     async getStudentbyId(id) {
       try {
         const { data: { students } } = await getStudentbyId({ id })
-        console.log(students)
         if (students.length > 0) {
           return students[0];
         }

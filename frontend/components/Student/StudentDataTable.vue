@@ -1,15 +1,17 @@
 <template>
-  <div class="flex justify-between">
+  <div class="flex justify-between items-center">
     <Input
       class="max-w-sm"
       :placeholder="filterPlaceholder"
       :model-value="table.getColumn(`${filterColumn}`)?.getFilterValue() as string"
       @update:model-value="table.getColumn(`${filterColumn}`)?.setFilterValue($event)"
     />
-    <div>
+    
+    <div class="flex">
+      <GenerateStudentLink />
       <Dialog>
         <DialogTrigger>
-          <Button variant="outline" v-if="table.getIsSomeRowsSelected() || table.getIsAllRowsSelected()">
+          <Button class="ml-2" variant="destructive" v-if="table.getIsSomeRowsSelected() || table.getIsAllRowsSelected()">
             Remove student
           </Button>
         </DialogTrigger>
@@ -66,7 +68,6 @@
         <template v-else>
           <TableRow>
             <TableCell :colspan="columns.length" class="h-24 text-center">
-              No results
               No results
             </TableCell>
           </TableRow>

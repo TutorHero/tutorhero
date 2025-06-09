@@ -67,11 +67,36 @@
           <TableRow>
             <TableCell :colspan="columns.length" class="h-24 text-center">
               No results
+              No results
             </TableCell>
           </TableRow>
         </template>
       </TableBody>
     </Table>
+  </div>
+  <div class="flex items-center justify-end space-x-2 py-4">
+    <div class="flex-1 text-sm text-muted-foreground">
+      {{ table.getFilteredSelectedRowModel().rows.length }} of
+      {{ table.getFilteredRowModel().rows.length }} row(s) selected.
+    </div>
+    <div class="space-x-2">
+      <Button
+        variant="outline"
+        size="sm"
+        :disabled="!table.getCanPreviousPage()"
+        @click="table.previousPage()"
+      >
+        Previous
+      </Button>
+      <Button
+        variant="outline"
+        size="sm"
+        :disabled="!table.getCanNextPage()"
+        @click="table.nextPage()"
+      >
+        Next
+      </Button>
+    </div>
   </div>
   <div class="flex items-center justify-end space-x-2 py-4">
     <div class="flex-1 text-sm text-muted-foreground">
@@ -129,6 +154,7 @@ const props = defineProps<{
 const columnFilters = ref<ColumnFiltersState>([])
 const rowSelection = ref({})
 
+
 const table = useVueTable<Student>({
   get data() { return props.data },
   get columns() { return props.columns },
@@ -149,9 +175,4 @@ const removeStudents = () => {
     console.log(student.id)
   })
 }
-
-watchEffect(() => {
-  console.log(table.getSelectedRowModel().rows)
-  console.log(table.getIsSomeRowsSelected() || table.getIsAllRowsSelected())
-})
 </script>

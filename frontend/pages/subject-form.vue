@@ -82,7 +82,7 @@ const studentStore = useStudentStore()
 const students = ref([])
 const selectedDays = ref([])
 const { $firebaseAuth, $firebaseDataConnect } = useNuxtApp();
-import TimePicker from '../components/timepicker.vue'
+import TimePicker from '../components/TimePicker.vue'
 const authStore = useAuthStore()
 const { user } = storeToRefs(authStore)
 

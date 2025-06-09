@@ -1,7 +1,8 @@
 import type { ColumnDef } from '@tanstack/vue-table'
 import { MapPin } from 'lucide-vue-next';
 import { Checkbox } from '@/components/ui/checkbox'
-import { updatePhoneNumber } from 'firebase/auth';
+import { Button } from '@/components/ui/button'
+import DropdownMenuActions from '../Student/DropdownActions.vue';
 
 export interface Student {
   id: string
@@ -78,5 +79,16 @@ export const columns: ColumnDef<Student>[] = [
         return h('div', { class: 'text-neutral-400' }, "No address specified")
       }
     }    
-  }
+  },
+  {
+    id: 'actions',
+    enableHiding: false,
+    cell: ({ row }) => {
+      const student = row.original
+
+      return h(DropdownMenuActions, {
+        student
+      })
+    },
+  },
 ]

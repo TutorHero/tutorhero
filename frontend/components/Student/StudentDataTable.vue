@@ -98,30 +98,6 @@
       </Button>
     </div>
   </div>
-  <div class="flex items-center justify-end space-x-2 py-4">
-    <div class="flex-1 text-sm text-muted-foreground">
-      {{ table.getFilteredSelectedRowModel().rows.length }} of
-      {{ table.getFilteredRowModel().rows.length }} row(s) selected.
-    </div>
-    <div class="space-x-2">
-      <Button
-        variant="outline"
-        size="sm"
-        :disabled="!table.getCanPreviousPage()"
-        @click="table.previousPage()"
-      >
-        Previous
-      </Button>
-      <Button
-        variant="outline"
-        size="sm"
-        :disabled="!table.getCanNextPage()"
-        @click="table.nextPage()"
-      >
-        Next
-      </Button>
-    </div>
-  </div>
 </template>
 
 <script setup lang="ts" generic="TData, TValue">
@@ -142,7 +118,8 @@ import {
   getFilteredRowModel,
   useVueTable,
 } from '@tanstack/vue-table'
-import type { Student } from '../Student/columns';
+import type { Student } from './columns';
+import SubjectForm from '@/components/SubjectForm.vue'
 
 const props = defineProps<{
   columns: ColumnDef<Student, TValue>[]
@@ -153,7 +130,6 @@ const props = defineProps<{
 
 const columnFilters = ref<ColumnFiltersState>([])
 const rowSelection = ref({})
-
 
 const table = useVueTable<Student>({
   get data() { return props.data },
@@ -171,6 +147,7 @@ const table = useVueTable<Student>({
 
 const studentStore = useStudentStore()
 const removeStudents = () => {
+  console.log('delete')
   table.getSelectedRowModel().rows.forEach(student => {
     console.log(student.id)
   })

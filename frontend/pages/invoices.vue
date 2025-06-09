@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import type { Invoice } from '@/components/Invoice/columns'
 import { columns } from '@/components/Invoice/columns'
-import DataTable from '@/components/ui/DataTable.vue'
+import DataTable from '@/components/Student/StudentDataTable.vue'
 
 const data = ref<Invoice[]>([
   {

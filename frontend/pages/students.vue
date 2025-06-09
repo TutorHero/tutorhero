@@ -1,13 +1,13 @@
 <template>
   <div>
-    <DataTable :columns="columns" :data="students" filterPlaceholder="Filter student..." filterColumn="name" />
+    <StudentDataTable :columns="columns" :data="students" filterPlaceholder="Filter student..." filterColumn="name" />
   </div>
 </template>
 
 <script lang="ts" setup>
 import type { Student } from '@/components/Student/columns'
 import { columns } from '@/components/Student/columns'
-import DataTable from '@/components/ui/DataTable.vue'
+import StudentDataTable from '@/components/Student/StudentDataTable.vue'
 import { getTutorStudents } from '@firebasegen/default-connector';
 
 interface Contact {

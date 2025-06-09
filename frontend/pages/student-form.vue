@@ -79,7 +79,7 @@ const submitForm = async (data) => {
     data.year = data.otheryear;
   }
   data.tutorId = tutorId.value
-
+  await studentStore.createStudent(data)
   toast({
     description: 'Data Submitted Successfully',
   });

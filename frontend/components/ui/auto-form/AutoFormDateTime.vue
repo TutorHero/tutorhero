@@ -12,7 +12,19 @@ import AutoFormLabel from './AutoFormLabel.vue'
 import { beautifyObjectName, maybeBooleanishToBoolean } from './utils'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
-const props = defineProps<FieldProps>()
+
+const props = defineProps<{
+  fieldName: string
+  required?: boolean
+  config?: Config<T>
+  schema?: z.ZodArray<T>
+  disabled?: boolean
+}>()
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: Date): void
+  (e: 'update:datePart', value: CalendarDate): void
+}>()
+
 
 // --- Logging Prefix ---
 const logPrefix = `[AutoFormDateTime ${props.fieldName}]`
@@ -141,7 +153,7 @@ const setupWatchers = (componentField: any) => {
                 'Hour:', newH,
                 'Min:', newM);
     console.log(`${logPrefix} isDateTimeComplete:`, isDateTimeComplete.value);
-
+    
     if (isDateTimeComplete.value) {
       const dateToEmit = internalDatePart.value!.toDate(getLocalTimeZone());
       dateToEmit.setHours(selectedHour.value!);
@@ -150,6 +162,7 @@ const setupWatchers = (componentField: any) => {
       dateToEmit.setMilliseconds(0);
 
       console.log(`${logPrefix} Constructed dateToEmit:`, dateToEmit);
+      // emit(dateToEmit);
       if (componentField.modelValue?.getTime() !== dateToEmit.getTime()) {
         console.log(`${logPrefix} Emitting 'onInput' with new Date:`, dateToEmit);
         componentField.onInput(dateToEmit);
@@ -190,8 +203,8 @@ watch(internalDatePart, (newVal) => {
         }
     }
 });
-
 </script>
+
 
 <template>
   <FormField v-slot="slotProps" :name="fieldName">

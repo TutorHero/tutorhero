@@ -26,7 +26,7 @@
 
         <CollapsibleContent class="space-y-2">
           <div>
-            asdf
+            Content
           </div>
         </CollapsibleContent>
       </Collapsible>

@@ -1,11 +1,46 @@
 <template>
-  <Input
-    class="max-w-sm"
-    :placeholder="filterPlaceholder"
-    :model-value="table.getColumn(`${filterColumn}`)?.getFilterValue() as string"
-    @update:model-value="table.getColumn(`${filterColumn}`)?.setFilterValue($event)"
-  />
-  <div class="mt-3 border rounded-md">
+  <div class="flex justify-between">
+    <Input
+      class="max-w-sm"
+      :placeholder="filterPlaceholder"
+      :model-value="table.getColumn(`${filterColumn}`)?.getFilterValue() as string"
+      @update:model-value="table.getColumn(`${filterColumn}`)?.setFilterValue($event)"
+    />
+    <div>
+      <Dialog>
+        <DialogTrigger>
+          <Button variant="outline" v-if="table.getIsSomeRowsSelected() || table.getIsAllRowsSelected()">
+            Remove student
+          </Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Warning</DialogTitle>
+          </DialogHeader>
+          <div v-if="table.getSelectedRowModel().rows.length > 1">
+            Are you sure you want to remove the selected students?
+          </div>
+          <div v-else>
+            Are you sure you want to remove the selected student?
+          </div>
+          <DialogFooter>
+            <DialogClose>
+              <Button variant="destructive" type="submit" @click="removeStudents">
+                Yes, remove
+              </Button>
+            </DialogClose>
+            <DialogClose>
+              <Button variant="secondary" type="submit">
+                No, do not remove
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </div>
+  </div>
+
+  <div class="w-full mt-3 border rounded-md">
     <Table>
       <TableHeader>
         <TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
@@ -31,12 +66,36 @@
         <template v-else>
           <TableRow>
             <TableCell :colspan="columns.length" class="h-24 text-center">
-              No results.
+              No results
             </TableCell>
           </TableRow>
         </template>
       </TableBody>
     </Table>
+  </div>
+  <div class="flex items-center justify-end space-x-2 py-4">
+    <div class="flex-1 text-sm text-muted-foreground">
+      {{ table.getFilteredSelectedRowModel().rows.length }} of
+      {{ table.getFilteredRowModel().rows.length }} row(s) selected.
+    </div>
+    <div class="space-x-2">
+      <Button
+        variant="outline"
+        size="sm"
+        :disabled="!table.getCanPreviousPage()"
+        @click="table.previousPage()"
+      >
+        Previous
+      </Button>
+      <Button
+        variant="outline"
+        size="sm"
+        :disabled="!table.getCanNextPage()"
+        @click="table.nextPage()"
+      >
+        Next
+      </Button>
+    </div>
   </div>
 </template>
 
@@ -58,24 +117,41 @@ import {
   getFilteredRowModel,
   useVueTable,
 } from '@tanstack/vue-table'
+import type { Student } from '../Student/columns';
 
 const props = defineProps<{
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  columns: ColumnDef<Student, TValue>[]
+  data: Student[]
   filterPlaceholder: String
   filterColumn: String
 }>()
 
 const columnFilters = ref<ColumnFiltersState>([])
+const rowSelection = ref({})
 
-const table = useVueTable({
+const table = useVueTable<Student>({
   get data() { return props.data },
   get columns() { return props.columns },
   getCoreRowModel: getCoreRowModel(),
   onColumnFiltersChange: updaterOrValue => valueUpdater(updaterOrValue, columnFilters),
+  onRowSelectionChange: updaterOrValue => valueUpdater(updaterOrValue, rowSelection),
   getFilteredRowModel: getFilteredRowModel(),
+  getRowId: row => row.id,
   state: {
-      get columnFilters() { return columnFilters.value },
+    get columnFilters() { return columnFilters.value },
+    get rowSelection() { return rowSelection.value } ,
   },
+})
+
+const studentStore = useStudentStore()
+const removeStudents = () => {
+  table.getSelectedRowModel().rows.forEach(student => {
+    console.log(student.id)
+  })
+}
+
+watchEffect(() => {
+  console.log(table.getSelectedRowModel().rows)
+  console.log(table.getIsSomeRowsSelected() || table.getIsAllRowsSelected())
 })
 </script>

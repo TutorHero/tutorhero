@@ -22,7 +22,6 @@ export const useStudentStore = defineStore('studentStore', {
     async createStudent(student) {
       try {
         const { data } = await createStudent(student);
-        console.log(data)
         return data.student_insert.id
       } catch (error) {
         console.log(error);

@@ -56,6 +56,7 @@ query getTutorStudents @auth(level: USER) {
     parentPhoneNumber
     address
     status
+    school
     subjects: tutorStudentSubjects_on_student {
       subject
       startTime

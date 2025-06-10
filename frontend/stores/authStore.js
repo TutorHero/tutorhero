@@ -3,6 +3,7 @@ import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useTutorStore } from './tutorStore.js';
 import { useStudentStore } from './studentStore.js';
 import axios from 'axios'
+import { v4 as uuidv4 } from 'uuid'
 
 export const useAuthStore = defineStore('authStore', {
   state: () => {
@@ -96,6 +97,14 @@ export const useAuthStore = defineStore('authStore', {
             'overrides': [
               { 'method': 'popup', 'minutes': 10 }
             ] //TODO : handle reminders
+          },
+          conferenceData: {
+            createRequest: {
+              requestId:uuidv4()
+            },
+            conferenceSolutionKey: {
+              type: "hangoutsMeet"
+            }
           }
         }
         const tutorStore = useTutorStore()

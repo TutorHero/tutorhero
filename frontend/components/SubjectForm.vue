@@ -127,7 +127,9 @@
               </div>
             </div>
           </FormControl>
-          <FormDescription>{{ newDate ? "Lesson ends at " + newDate.toString().slice(0,-38) : "" }}</FormDescription>
+          <FormDescription>{{
+            newDate ? "Lesson ends on " + newDate.toString().slice(0, -38) : ""
+          }}</FormDescription>
           <FormMessage />
         </FormItem>
       </FormField>
@@ -225,18 +227,14 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/toast/use-toast";
 import { CalendarIcon } from "lucide-vue-next";
 import { DateFormatter, getLocalTimeZone } from "@internationalized/date";
-const route = useRoute();
 const selectedDays = ref([]);
 const weekInterval = ref(1);
 const tutorStore = useTutorStore();
+const authStore = useAuthStore();
 const TutorStudentsSubjects = ref([]);
 const dateSelected = ref();
 const newDate = ref();
 const df = new DateFormatter("en-GB", { dateStyle: "long" });
-const tf = new DateFormatter("en-GB", {
-  dateStyle: "long",
-  timeStyle: "short",
-});
 const selectedHour = ref();
 const selectedMinute = ref();
 const selectedDurationHour = ref();
@@ -255,7 +253,7 @@ const durationMinutes = Array.from({ length: 4 }, (_, i) => ({
 }));
 const recurrence = ref(false);
 
-const props = defineProps(['studentId'])
+const props = defineProps(["studentId","studentName"]);
 
 onMounted(async () => {
   TutorStudentsSubjects.value = await tutorStore.getTutorStudents();
@@ -273,22 +271,35 @@ const { isFieldDirty, handleSubmit } = useForm({
   validationSchema: formSchema,
 });
 
-watch(selectedDurationMinute, (value) => {
-  const startDate = dateSelected.value.toDate(getLocalTimeZone());
-  startDate.setHours(selectedHour.value);
-  startDate.setMinutes(selectedMinute.value);
-  console.log(startDate);
-  const endDate = new Date(startDate);
-  endDate.setMinutes(
-    endDate.getMinutes() +
-      selectedDurationHour.value * 60 +
-      selectedDurationMinute.value
-  );
-  console.log(endDate);
-  newDate.value = endDate;
-  console.log(newDate);
-  console.log(tf.format(newDate.value));
-});
+watch(
+  [
+    dateSelected,
+    selectedHour,
+    selectedMinute,
+    selectedDurationHour,
+    selectedDurationMinute,
+  ],
+  () => {
+    if (
+      dateSelected.value &&
+      (selectedHour.value || selectedHour.value == 0) &&
+      (selectedMinute.value || selectedMinute.value == 0) &&
+      (selectedDurationHour.value || selectedDurationHour.value == 0) &&
+      (selectedDurationMinute.value || selectedDurationMinute.value == 0)
+    ) {
+      const startDate = dateSelected.value.toDate(getLocalTimeZone());
+      startDate.setHours(selectedHour.value);
+      startDate.setMinutes(selectedMinute.value);
+      const endDate = new Date(startDate);
+      endDate.setMinutes(
+        endDate.getMinutes() +
+          selectedDurationHour.value * 60 +
+          selectedDurationMinute.value
+      );
+      newDate.value = endDate;
+    }
+  }
+);
 
 const onSubmit = handleSubmit((values) => {
   const startDate = dateSelected.value.toDate(getLocalTimeZone());
@@ -300,17 +311,21 @@ const onSubmit = handleSubmit((values) => {
       selectedDurationHour.value * 60 +
       selectedDurationMinute.value
   );
-  const interval = weekInterval.value * 7 * 24 * 60 * 60 * 1000;
   values.startTime = startDate;
-  values.endTime = newDate;
-  values.interval = interval ?? 20;
+  values.endTime = endDate;
   console.log(values.interval);
   values.studentId = props.studentId;
-  // tutorStore.createTutorSubject(values)
-  console.log(endDate.getMonth())
   const rrule = `WEEKLY, interval=${
     weekInterval.value
-  }, byweekday=(${selectedDays.value.toString()}), until=parse(${endDate.getFullYear() + 1}${1<= endDate.getMonth() && endDate.getMonth()<6 ? "01": "06"}31T000000)`;
-  console.log(rrule);
+  }, byweekday=(${selectedDays.value.toString()}), until=parse(${
+    endDate.getFullYear() + 1
+  }${
+    1 <= endDate.getMonth() && endDate.getMonth() < 6 ? "01" : "06"
+  }01T000000)`;
+  values.interval = rrule;
+  console.log(values);
+  // tutorStore.createTutorSubject(values)
+  startDate.setHours(startDate.getHours() + 8)
+  console.log(startDate.toISOString().slice(0,-5))
 });
 </script>

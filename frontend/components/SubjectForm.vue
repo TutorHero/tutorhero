@@ -282,8 +282,8 @@ const onSubmit = handleSubmit(async (values) => {
   values.interval = rrule; //Change interval to human like term every Monday etc
   values.recurrence = rrule;
   console.log(values);
-  await tutorStore.createTutorStudentSubject(values)
-  await authStore.addEvent(`${values.subject} with ${props.studentName}`, values.startTime, values.endTime, values.studentId, values.recurrence)
+  const tutorStudentSubjectId = await tutorStore.createTutorStudentSubject(values)
+  await authStore.addEvent(`${values.subject} with ${props.studentName}`, values.startTime, values.endTime, values.studentId, values.recurrence, tutorStudentSubjectId)
   startDate.setHours(startDate.getHours() + 8)
   console.log(startDate.toISOString().slice(0, -5))
 });

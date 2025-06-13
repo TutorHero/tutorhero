@@ -27,13 +27,6 @@ export const useStudentStore = defineStore('studentStore', {
         console.log(error);
       }
     },
-    async createSubject(subject) {
-      try {
-        const { data } = await createStudentStudentSubject(subject)
-      } catch (error) {
-        console.log(error);
-      }
-    }, // TODO: Subject Store
     async getStudentbyId(id) {
       try {
         const { data: { students } } = await getStudentbyId({ id })

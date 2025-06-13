@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { createLessonEvent } from '@firebasegen/default-connector';
 import { useTutorStore } from './tutorStore.js';
 import { useStudentStore } from './studentStore.js';
 import axios from 'axios'
@@ -63,7 +64,7 @@ export const useAuthStore = defineStore('authStore', {
 
 
     },
-    async addEvent(summary, startTime, endTime, studentId, reccurence = "RRULE:FREQ=WEEKLY;UNTIL=20251231T183000Z;WKST=SU;BYDAY=TH") {
+    async addEvent(summary, startTime, endTime, studentId, reccurence = "RRULE:FREQ=WEEKLY;UNTIL=20251231T183000Z;WKST=SU;BYDAY=TH", tutorStudentSubjectId) {
       // Time in this format: 2025-05-29T17:00:00 no timezone
       try {
         if (!summary || !startTime || !endTime || !studentId) {
@@ -71,11 +72,10 @@ export const useAuthStore = defineStore('authStore', {
         }
         const studentStore = useStudentStore()
         const student = await studentStore.getStudentbyId(studentId)
-        console.log(student)
         const requestPayload = {
           summary: summary,
           location: "3 Flora Dr 08-15",
-          description: "Secondary 3 English 1.5 hrs, Focus on essay",
+          description: "Secondary 3 English 1.5 hrs, Focus on essay", // handle description
           start: {
             dateTime: startTime,
             timeZone: "Asia/Singapore"
@@ -111,7 +111,7 @@ export const useAuthStore = defineStore('authStore', {
         await tutorStore.getCurrentTutor()
         console.log(tutorStore.tutor)
         const calendarId = tutorStore.tutor.calendarId
-        const data = await axios.post(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?conferenceDataVersion=1`, requestPayload,
+        const response = await axios.post(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?conferenceDataVersion=1`, requestPayload,
           {
             headers: {
               'Authorization': `Bearer ${this.accessToken}`,
@@ -120,18 +120,19 @@ export const useAuthStore = defineStore('authStore', {
             }
           }
         )
-        console.log(data)
-        const eventId = data.data.id
-        const response = await axios.get(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events/${eventId}/instances`,
+        const eventId = response.data.id
+        const { data } = await axios.get(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events/${eventId}/instances`,
           {
             headers: {
               'Authorization': `Bearer ${this.accessToken}`,
               'Content-Type': 'application/json',
               'Accept': 'application/json'
             }
-          }
-        ) //TODO : INSERT ALL INTO DB
-        console.log(response)
+          }) //TODO : INSERT ALL INTO DB
+        for (const event of data.items){
+          await createLessonEvent({ tutorStudentSubjectId, startTime: event.start.dateTime, endTime: event.end.dateTime, status:"Scheduled" });
+        }
+
       } catch (error) {
         console.log(error)
       }

@@ -50,7 +50,8 @@ export const useTutorStore = defineStore('tutorStore', {
     
     async createTutorStudentSubject(studentId, subject, rate, startTime, endTime, interval, eventId, reccurence) {
       try {
-        await createTutorStudentSubject(studentId, subject, rate, startTime, endTime, interval, eventId, reccurence);
+        const {data} = await createTutorStudentSubject(studentId, subject, rate, startTime, endTime, interval, eventId, reccurence);
+        return data.tutorStudentSubject_insert.id; 
       } catch(error) {
         console.log(error)
       }

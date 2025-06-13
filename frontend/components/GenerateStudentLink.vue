@@ -45,7 +45,7 @@ const link = ref('')
 const generateLink = async () => {
   copied.value = false
   const { data: { studentFormURL_insert: { id } } } = await createStudentFormUrl()
-  url.value = `${process.env.NODE_ENV === "development" ? 'http' : 'https'}://${window.location.host}/student-form?id=${id}`
+  url.value = `${window.location.protocol}//${window.location.host}/student-form?id=${id}`
 }
 
 const copyLink = () => {

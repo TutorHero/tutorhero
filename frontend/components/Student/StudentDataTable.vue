@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-between items-center">
     <Input
-      class="max-w-sm"
+      class="max-w-sm mr-2"
       :placeholder="filterPlaceholder"
       :model-value="table.getColumn(`${filterColumn}`)?.getFilterValue() as string"
       @update:model-value="table.getColumn(`${filterColumn}`)?.setFilterValue($event)"

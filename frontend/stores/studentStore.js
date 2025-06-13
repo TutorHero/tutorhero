@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { createStudent, getTutorStudents, createTutorStudentSubject, getStudentbyId } from '@firebasegen/default-connector';
+import { createStudent, getTutorStudents, createTutorStudentSubject, getStudentbyId, deleteStudent } from '@firebasegen/default-connector';
 
 import { generatePayNow } from '../composables/generatePayNowQr';
 
@@ -42,6 +42,13 @@ export const useStudentStore = defineStore('studentStore', {
         }
       } catch (error) {
         console.log(error);
+      }
+    },
+    async deleteStudent(id) {
+      try {
+        const { data } = await deleteStudent({ id })
+      } catch (error) {
+        console.log(error)
       }
     },
     async generateQR(phoneNo, amount, remarks) {

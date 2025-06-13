@@ -6,14 +6,14 @@
 <script setup>
 const qrString = ref('')
 import QRCodeStyling from "qr-code-styling";
-import { useLinkStore } from '../stores/linkStore';
 const tutorStore = useTutorStore()
 const studentStore = useStudentStore()
 const { $firebaseAuth, $firebaseDataConnect } = useNuxtApp();
 import { getTutorStudents, createTutorStudentSubject, getStudentbyName } from '@firebasegen/default-connector'
-const linkStore = useLinkStore();
+
 import axios from 'axios'
 onMounted(async () => {
+  await studentStore.deleteStudent("491fcd3be1c749949d6f2142a2e728e7")
   qrString.value = await studentStore.generateQR('87782016',30,'Tuition fee')
   console.log(qrString.value)
   const qrCode = new QRCodeStyling({

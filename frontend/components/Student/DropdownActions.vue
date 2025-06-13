@@ -18,7 +18,7 @@
       </DropdownMenuGroup>
     </DropdownMenuContent>
   </DropdownMenu>
-  
+
   <Dialog :open="showRemoveStudentDialog" @update:open="showRemoveStudentDialog = $event">
     <DialogContent>
       <DialogHeader>
@@ -45,7 +45,7 @@
           Schedule lessons
         </DialogTitle>
       </DialogHeader>
-      <SubjectForm :studentId="student.id"/>
+      <SubjectForm :studentId="student.id" />
     </DialogContent>
   </Dialog>
 </template>
@@ -66,8 +66,10 @@ const showRemoveStudentDialog = ref(false)
 const showSubjectFormDialog = ref(false)
 
 const props = defineProps(['student'])
+const emits = defineEmits(['deleteStudent'])
 const removeStudent = () => {
   console.log(props.student.id)
   showRemoveStudentDialog.value = false
+  emit('deleteStudent',[...props.student])
 }
 </script>

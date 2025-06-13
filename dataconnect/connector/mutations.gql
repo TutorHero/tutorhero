@@ -107,6 +107,11 @@ mutation updateStudent(
   )
 }
 
+
+mutation deleteStudent($id: UUID!) @auth(level: PUBLIC) {
+  student_delete(id: $id)
+}
+
 mutation createStudentFormURL @auth(level: USER) {
   studentFormURL_insert(data: { tutorId_expr: "auth.uid" })
 }

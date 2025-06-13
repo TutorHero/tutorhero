@@ -36,6 +36,7 @@
 <script setup>
 import DialogTrigger from '~/components/ui/dialog/DialogTrigger.vue'
 import { createStudentFormUrl, isUrlValid } from '@firebasegen/default-connector';
+import { nodeModuleNameResolver } from 'typescript';
 const { $firebaseAuth, $firebaseDataConnect } = useNuxtApp();
 const url = ref('')
 const copied = ref(false)
@@ -44,7 +45,7 @@ const link = ref('')
 const generateLink = async () => {
   copied.value = false
   const { data: { studentFormURL_insert: { id } } } = await createStudentFormUrl()
-  url.value = "http://localhost:3000/student-form?id=" + id // TODO: ACCOUNT FOR PROD URL
+  url.value = `${process.env.NODE_ENV === "development" ? 'http' : 'https'}://${window.location.host}/student-form?id=${id}`
 }
 
 const copyLink = () => {

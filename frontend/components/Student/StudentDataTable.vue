@@ -150,7 +150,7 @@ const studentStore = useStudentStore()
 const removeStudents = () => {
   console.log('delete')
   table.getSelectedRowModel().rows.forEach(student => {
-    console.log(student.id)
-  })
+    
+  })// emit to parent to delete
 }
 </script>

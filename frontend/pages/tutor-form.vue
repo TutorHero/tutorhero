@@ -46,11 +46,9 @@ const genders = {
 
 
 const submitForm = async (data) => {
-  console.log('start')
   await tutorStore.createTutor(data)
   tutors.value = tutorStore.tutor
   console.log(tutors.value)
-  console.log('here')
   await authStore.addCalendar()
 
   toast({

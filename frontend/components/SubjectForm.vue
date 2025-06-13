@@ -1,11 +1,7 @@
 <template>
   <div>
     <form @submit="onSubmit" class=" ">
-      <FormField
-        v-slot="{ componentField }"
-        name="subject"
-        :validate-on-blur="!isFieldDirty"
-      >
+      <FormField v-slot="{ componentField }" name="subject" :validate-on-blur="!isFieldDirty">
         <FormItem class="mb-3">
           <FormLabel>Subject</FormLabel>
           <FormControl>
@@ -15,11 +11,7 @@
           <FormMessage />
         </FormItem>
       </FormField>
-      <FormField
-        v-slot="{ componentField }"
-        name="rate"
-        :validate-on-blur="!isFieldDirty"
-      >
+      <FormField v-slot="{ componentField }" name="rate" :validate-on-blur="!isFieldDirty">
         <FormItem class="mb-3">
           <FormLabel>Rate (Per Hour)</FormLabel>
           <FormControl>
@@ -55,11 +47,7 @@
                     <SelectValue placeholder="Hour" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem
-                      v-for="hour in hours"
-                      :key="hour.value"
-                      :value="hour.value"
-                    >
+                    <SelectItem v-for="hour in hours" :key="hour.value" :value="hour.value">
                       {{ hour.label }}
                     </SelectItem>
                   </SelectContent>
@@ -71,11 +59,7 @@
                     <SelectValue placeholder="Min" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem
-                      v-for="minute in minutes"
-                      :key="minute.value"
-                      :value="minute.value"
-                    >
+                    <SelectItem v-for="minute in minutes" :key="minute.value" :value="minute.value">
                       {{ minute.label }}
                     </SelectItem>
                   </SelectContent>
@@ -98,11 +82,7 @@
                     <SelectValue placeholder="Hour" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem
-                      v-for="hour in hours"
-                      :key="hour.value"
-                      :value="hour.value"
-                    >
+                    <SelectItem v-for="hour in hours" :key="hour.value" :value="hour.value">
                       {{ hour.label }}
                     </SelectItem>
                   </SelectContent>
@@ -115,11 +95,7 @@
                     <SelectValue placeholder="Min" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem
-                      v-for="minute in durationMinutes"
-                      :key="minute.value"
-                      :value="minute.value"
-                    >
+                    <SelectItem v-for="minute in durationMinutes" :key="minute.value" :value="minute.value">
                       {{ minute.label }}
                     </SelectItem>
                   </SelectContent>
@@ -129,11 +105,11 @@
           </FormControl>
           <FormDescription>{{
             newDate ? "Lesson ends on " + newDate.toString().slice(0, -38) : ""
-          }}</FormDescription>
+            }}</FormDescription>
           <FormMessage />
         </FormItem>
       </FormField>
-      <FormField v-slot="{}" name="recurrence">
+      <FormField v-slot="{ }" name="recurrence">
         <FormItem class="flex items-center justify-between mb-3">
           <div>
             <FormLabel> Create a lesson recurrence? </FormLabel>
@@ -144,25 +120,13 @@
           </FormControl>
         </FormItem>
       </FormField>
-      <FormField
-        v-slot="{}"
-        name="Interval"
-        :validate-on-blur="!isFieldDirty"
-        class="mt-4"
-        v-if="recurrence"
-      >
+      <FormField v-slot="{ }" name="Interval" :validate-on-blur="!isFieldDirty" class="mt-4" v-if="recurrence">
         <FormItem class="mb-3">
           <FormLabel>Interval of lessons</FormLabel>
           <FormControl>
             <div class="mt-4 flex items-center gap-2 text-sm leading-none">
               Every
-              <NumberField
-                id="repeatQuantity"
-                :default-value="1"
-                :min="1"
-                :max="4"
-                v-model="weekInterval"
-              >
+              <NumberField id="repeatQuantity" :default-value="1" :min="1" :max="4" v-model="weekInterval">
                 <NumberFieldContent>
                   <NumberFieldDecrement />
                   <NumberFieldInput />
@@ -209,10 +173,9 @@
   </div>
 </template>
 
-<script setup >
+<script setup>
 import { toTypedSchema } from "@vee-validate/zod";
 import { useForm } from "vee-validate";
-import { h } from "vue";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import {
@@ -253,7 +216,7 @@ const durationMinutes = Array.from({ length: 4 }, (_, i) => ({
 }));
 const recurrence = ref(false);
 
-const props = defineProps(["studentId","studentName"]);
+const props = defineProps(["studentId", "studentName"]);
 
 onMounted(async () => {
   TutorStudentsSubjects.value = await tutorStore.getTutorStudents();
@@ -293,39 +256,35 @@ watch(
       const endDate = new Date(startDate);
       endDate.setMinutes(
         endDate.getMinutes() +
-          selectedDurationHour.value * 60 +
-          selectedDurationMinute.value
+        selectedDurationHour.value * 60 +
+        selectedDurationMinute.value
       );
       newDate.value = endDate;
     }
   }
 );
 
-const onSubmit = handleSubmit((values) => {
-  const startDate = dateSelected.value.toDate(getLocalTimeZone());
+const onSubmit = handleSubmit(async (values) => {
+  const startDate = dateSelected.value.toDate(getLocalTimeZone()); //error handling and form validation needs to be done
   startDate.setHours(selectedHour.value);
   startDate.setMinutes(selectedMinute.value);
   const endDate = new Date(startDate);
   endDate.setMinutes(
     endDate.getMinutes() +
-      selectedDurationHour.value * 60 +
-      selectedDurationMinute.value
+    selectedDurationHour.value * 60 +
+    selectedDurationMinute.value
   );
   values.startTime = startDate;
   values.endTime = endDate;
   console.log(values.interval);
   values.studentId = props.studentId;
-  const rrule = `WEEKLY, interval=${
-    weekInterval.value
-  }, byweekday=(${selectedDays.value.toString()}), until=parse(${
-    endDate.getFullYear() + 1
-  }${
-    1 <= endDate.getMonth() && endDate.getMonth() < 6 ? "01" : "06"
-  }01T000000)`;
-  values.interval = rrule;
+  const rrule = `RRULE:FREQ=WEEKLY;INTERVAL=${weekInterval.value};BYDAY=${selectedDays.value.join(',')};UNTIL=${endDate.getFullYear() + 1}${endDate.getMonth() < 6 ? '01' : '06'}01T000000Z`
+  values.interval = rrule; //Change interval to human like term every Monday etc
+  values.recurrence = rrule;
   console.log(values);
-  // tutorStore.createTutorSubject(values)
+  await tutorStore.createTutorStudentSubject(values)
+  await authStore.addEvent(`${values.subject} with ${props.studentName}`, values.startTime, values.endTime, values.studentId, values.recurrence)
   startDate.setHours(startDate.getHours() + 8)
-  console.log(startDate.toISOString().slice(0,-5))
+  console.log(startDate.toISOString().slice(0, -5))
 });
 </script>

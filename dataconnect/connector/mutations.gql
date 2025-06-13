@@ -108,7 +108,7 @@ mutation updateStudent(
 }
 
 
-mutation deleteStudent($id: UUID!) @auth(level: PUBLIC) {
+mutation deleteStudent($id: UUID!) @auth(level: USER) {
   student_delete(id: $id)
 }
 

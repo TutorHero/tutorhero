@@ -1,7 +1,7 @@
 process.env.DATA_CONNECT_EMULATOR_HOST = "http://127.0.0.1:9399" // remove when deploy
 const { onSchedule } = require("firebase-functions/v2/scheduler");
 const { logger } = require("firebase-functions");
-const { onRequest } = require("firebase-functions/v2/https");
+const { onRequest, onCall } = require("firebase-functions/v2/https");
 const { initializeApp } = require("firebase-admin/app");
 const { getDataConnect } = require('firebase-admin/data-connect');
 

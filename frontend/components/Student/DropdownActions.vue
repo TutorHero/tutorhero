@@ -45,7 +45,7 @@
           Schedule lessons
         </DialogTitle>
       </DialogHeader>
-      <SubjectForm :studentId="student.id" />
+      <SubjectForm :studentId="student.id" :studentName="student.name" />
     </DialogContent>
   </Dialog>
 </template>

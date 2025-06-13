@@ -45,11 +45,11 @@ export default defineNuxtPlugin(() => {
     }
   });
 
-    const dataConnect = getDataConnect(app, connectorConfig);
-    if (process.env.NODE_ENV === "development") {
-      connectDataConnectEmulator(dataConnect, "127.0.0.1", 9399);
-      connectAuthEmulator(auth, "http://127.0.0.1:9099");
-    }
+  const dataConnect = getDataConnect(app, connectorConfig);
+  if (process.env.NODE_ENV === "development") {
+    connectDataConnectEmulator(dataConnect, "127.0.0.1", 9399);
+    connectAuthEmulator(auth, "http://127.0.0.1:9099");
+  }
 
   return {
     provide: {

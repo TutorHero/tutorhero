@@ -92,25 +92,26 @@ export const useAuthStore = defineStore('authStore', {
               email: student.email || null
             }
           ],
+          conferenceData: {
+            createRequest: {
+              requestId: uuidv4(),
+              conferenceSolutionKey: {
+                type: 'hangoutsMeet'
+              }
+            }
+          },
           'reminders': {
             'useDefault': false,
             'overrides': [
               { 'method': 'popup', 'minutes': 10 }
             ] //TODO : handle reminders
-          },
-          conferenceData: {
-            createRequest: {
-              requestId:uuidv4()
-            },
-            conferenceSolutionKey: {
-              type: "hangoutsMeet"
-            }
           }
         }
         const tutorStore = useTutorStore()
+        await tutorStore.getCurrentTutor()
         console.log(tutorStore.tutor)
         const calendarId = tutorStore.tutor.calendarId
-        const data = await axios.post(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events`, requestPayload,
+        const data = await axios.post(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?conferenceDataVersion=1`, requestPayload,
           {
             headers: {
               'Authorization': `Bearer ${this.accessToken}`,

@@ -39,10 +39,10 @@ type TutorStudentSubject @table (key: ["id"]) {
   subject: String!
   startTime: Timestamp!
   endTime: Timestamp!
-  interval: String! #RRULE
+  interval: String! # Every Tuesday etc
   rate: Float!
   eventId: String
-  recurrence: String
+  recurrence: String #rrule
 }
 
 

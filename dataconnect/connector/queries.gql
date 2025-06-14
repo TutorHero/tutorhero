@@ -123,3 +123,32 @@ query isUrlValid($id: UUID!) @auth(level: PUBLIC) {
     }
   }
 }
+query getLessonEvents ($endLimit:Timestamp!) @auth(level: USER) {
+  lessonEvents(
+    where: {
+      tutorStudentSubject: {
+        tutor: {
+          id: {
+            eq_expr: "auth.uid"
+          }
+        }
+      },
+      startTime: { gt_expr: "request.time" },
+      endTime: {lt: $endLimit}
+    },
+    orderBy: [{ startTime: ASC }],
+  ) {
+    id
+    startTime
+    endTime
+    tutorStudentSubject {
+      subject
+      student {
+        id
+        name
+        type
+        address
+      }
+    }
+  }
+}

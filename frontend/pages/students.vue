@@ -1,6 +1,7 @@
 <template>
   <div>
-    <StudentDataTable :columns="columns" :data="students" filterPlaceholder="Filter student..." @deleteStudent="deleteStudentEvent" filterColumn="name" />
+    <StudentDataTable :columns="columns" :data="students" filterPlaceholder="Filter student..."
+      @deleteStudent="deleteStudentEvent" filterColumn="name" />
   </div>
 </template>
 
@@ -25,11 +26,10 @@ const refetch = async () => {
   console.log(students.value)
 } // are we handling the source of truth from store or page?
 
-await refetch()
 
-const deleteStudentEvent = async(students: Student[]) =>{
-  for (const student of students){
-    await deleteStudent({id:student.id})
+const deleteStudentEvent = async (students: Student[]) => {
+  for (const student of students) {
+    await deleteStudent({ id: student.id })
   }
 }
 

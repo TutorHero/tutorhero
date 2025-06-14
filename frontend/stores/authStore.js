@@ -43,6 +43,8 @@ export const useAuthStore = defineStore('authStore', {
             'Accept': 'application/json'
           }
         })
+
+        
         console.log(data)
         let currentTutor
         if (data.status === 200) {
@@ -56,13 +58,9 @@ export const useAuthStore = defineStore('authStore', {
         } else {
           return "Insufficient Permissions"
         }
-
-
       } catch (error) {
         console.log(error)
       }
-
-
     },
     async addEvent(summary, startTime, endTime, studentId, reccurence = "RRULE:FREQ=WEEKLY;UNTIL=20251231T183000Z;WKST=SU;BYDAY=TH", tutorStudentSubjectId) {
       // Time in this format: 2025-05-29T17:00:00 no timezone

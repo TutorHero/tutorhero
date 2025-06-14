@@ -39,7 +39,7 @@
   </Dialog>
 
   <Dialog :open="showSubjectFormDialog" @update:open="showSubjectFormDialog = $event">
-    <DialogContent>
+    <DialogContent class="max-w-[380px] sm:max-w-[500px]">
       <DialogHeader>
         <DialogTitle>
           Schedule lessons

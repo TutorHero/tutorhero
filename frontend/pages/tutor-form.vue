@@ -1,6 +1,6 @@
 <template>
-  <div class="mt-20 flex justify-center">
-    <AutoForm :form="form" :schema="schema" @submit="(data) => {
+  <div class="p-2 mt-20 flex justify-center">
+    <AutoForm class="w-full md:w-[500px]" :form="form" :schema="schema" @submit="(data) => {
       submitForm(data)
     }" :field-config="{
         email: {

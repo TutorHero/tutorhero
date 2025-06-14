@@ -27,7 +27,7 @@ const refetch = async () => {
 
 await refetch()
 
-const deleteStudentEvent = async(students) =>{
+const deleteStudentEvent = async(students: Student[]) =>{
   for (const student of students){
     await deleteStudent({id:student.id})
   }

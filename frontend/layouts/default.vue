@@ -30,48 +30,50 @@
       </NavigationMenu>
     </div>
 
-    <div>
-      <DropdownMenu>
-        <DropdownMenuTrigger>
-          <Button variant="outline" class="p-2">
-            <Menu class="w-6 h-6 stroke-[3px]" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <NavigationMenu orientation="vertical">
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NuxtLink v-slot="{ isActive, href, navigate }" to="/overview" custom>
-                  <NavigationMenuLink :active="isActive" :href="href" :class="navigationMenuTriggerStyle()" @click="navigate">
-                    Overview
-                  </NavigationMenuLink>
-                </NuxtLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NuxtLink v-slot="{ isActive, href, navigate }" to="/students" custom>
-                  <NavigationMenuLink :active="isActive" :href="href" :class="navigationMenuTriggerStyle()" @click="navigate">
-                    Students
-                  </NavigationMenuLink>
-                </NuxtLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NuxtLink v-slot="{ isActive, href, navigate }" to="/invoices" custom>
-                  <NavigationMenuLink :active="isActive" :href="href" :class="navigationMenuTriggerStyle()" @click="navigate">
-                    Invoices
-                  </NavigationMenuLink>
-                </NuxtLink>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
-        </DropdownMenuContent>
-      </DropdownMenu>
+    <div class="flex">
       <Button variant="ghost" @click="userSignOut">
         <LogOut stroke-width="3" />
         Sign out
       </Button>
+      <div class="md:hidden">
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Button variant="outline" class="p-2">
+              <Menu class="stroke-[3px]" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <NavigationMenu orientation="vertical">
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NuxtLink v-slot="{ isActive, href, navigate }" to="/overview" custom>
+                    <NavigationMenuLink :active="isActive" :href="href" :class="navigationMenuTriggerStyle()" @click="navigate">
+                      Overview
+                    </NavigationMenuLink>
+                  </NuxtLink>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NuxtLink v-slot="{ isActive, href, navigate }" to="/students" custom>
+                    <NavigationMenuLink :active="isActive" :href="href" :class="navigationMenuTriggerStyle()" @click="navigate">
+                      Students
+                    </NavigationMenuLink>
+                  </NuxtLink>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NuxtLink v-slot="{ isActive, href, navigate }" to="/invoices" custom>
+                    <NavigationMenuLink :active="isActive" :href="href" :class="navigationMenuTriggerStyle()" @click="navigate">
+                      Invoices
+                    </NavigationMenuLink>
+                  </NuxtLink>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
     </div>
   </div>
-  <div class="w-full h-full p-10">
+  <div class="w-full h-full p-3 md:p-10">
     <NuxtPage />
   </div>
 </template>

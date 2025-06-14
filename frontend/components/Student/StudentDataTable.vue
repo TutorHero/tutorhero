@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between items-center">
+  <div class="w-full flex justify-between items-center">
     <Input
       class="max-w-sm mr-2"
       :placeholder="filterPlaceholder"
@@ -135,6 +135,11 @@ const rowSelection = ref({})
 const table = useVueTable<Student>({
   get data() { return props.data },
   get columns() { return props.columns },
+  defaultColumn: {
+    size: 200, //starting column size
+    minSize: 100, //enforced during column resizing
+    maxSize: 500, //enforced during column resizing
+  },
   getCoreRowModel: getCoreRowModel(),
   onColumnFiltersChange: updaterOrValue => valueUpdater(updaterOrValue, columnFilters),
   onRowSelectionChange: updaterOrValue => valueUpdater(updaterOrValue, rowSelection),

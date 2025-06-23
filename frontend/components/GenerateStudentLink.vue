@@ -40,7 +40,7 @@
 
 <script setup>
 import DialogTrigger from '~/components/ui/dialog/DialogTrigger.vue'
-import { createStudentFormUrl } from '@firebasegen/default-connector';
+import { createStudentFormUrl, isUrlValid } from '@firebasegen/default-connector';
 const { $firebaseAuth, $firebaseDataConnect } = useNuxtApp();
 const url = ref('')
 const copied = ref(false)

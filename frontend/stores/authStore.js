@@ -44,7 +44,6 @@ export const useAuthStore = defineStore('authStore', {
           }
         })
 
-
         console.log(data)
         let currentTutor
         if (data.status === 200) {

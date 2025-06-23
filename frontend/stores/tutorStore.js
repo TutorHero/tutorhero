@@ -43,16 +43,16 @@ export const useTutorStore = defineStore('tutorStore', {
         const { data } = await getTutorStudents(tutor);
         this.tutorStudents = data;
         return this.tutorStudents;
-      }catch (error) {
+      } catch (error) {
         console.log(error)
       }
     },
-    
+
     async createTutorStudentSubject(studentId, subject, rate, startTime, endTime, interval, eventId, reccurence) {
       try {
-        const {data} = await createTutorStudentSubject(studentId, subject, rate, startTime, endTime, interval, eventId, reccurence);
-        return data.tutorStudentSubject_insert.id; 
-      } catch(error) {
+        const { data } = await createTutorStudentSubject(studentId, subject, rate, startTime, endTime, interval, eventId, reccurence);
+        return data.tutorStudentSubject_insert.id;
+      } catch (error) {
         console.log(error)
       }
     },
@@ -61,7 +61,7 @@ export const useTutorStore = defineStore('tutorStore', {
         await updateTutor(tutor)
         await this.getCurrentTutor()
         return this.tutor;
-        
+
       } catch (error) {
         console.log(error)
       }

@@ -283,7 +283,7 @@ const onSubmit = handleSubmit(async (values) => {
   values.recurrence = rrule;
   console.log(values);
   const tutorStudentSubjectId = await tutorStore.createTutorStudentSubject(values)
-  await authStore.addEvent(`${values.subject} with ${props.studentName}`, values.startTime, values.endTime, values.studentId, values.recurrence, tutorStudentSubjectId)
+  await authStore.addSchedule(`${values.subject} with ${props.studentName}`, values.startTime, values.endTime, values.studentId, values.recurrence, tutorStudentSubjectId)
   startDate.setHours(startDate.getHours() + 8)
   console.log(startDate.toISOString().slice(0, -5))
 });

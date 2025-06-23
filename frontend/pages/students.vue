@@ -26,6 +26,7 @@ const refetch = async () => {
   console.log(students.value)
 } // are we handling the source of truth from store or page?
 
+await refetch()
 
 const deleteStudentEvent = async (students: Student[]) => {
   for (const student of students) {

@@ -123,20 +123,14 @@ query isUrlValid($id: UUID!) @auth(level: PUBLIC) {
     }
   }
 }
-query getLessonEvents ($endLimit:Timestamp!) @auth(level: USER) {
+query getLessonEvents($endLimit: Timestamp!) @auth(level: USER) {
   lessonEvents(
     where: {
-      tutorStudentSubject: {
-        tutor: {
-          id: {
-            eq_expr: "auth.uid"
-          }
-        }
-      },
-      startTime: { gt_expr: "request.time" },
-      endTime: {lt: $endLimit}
-    },
-    orderBy: [{ startTime: ASC }],
+      tutorStudentSubject: { tutor: { id: { eq_expr: "auth.uid" } } }
+      startTime: { gt_expr: "request.time" }
+      endTime: { lt: $endLimit }
+    }
+    orderBy: [{ startTime: ASC }]
   ) {
     id
     startTime
@@ -150,5 +144,40 @@ query getLessonEvents ($endLimit:Timestamp!) @auth(level: USER) {
         address
       }
     }
+  }
+}
+
+query getTutorStudentSubjectbyId($id: UUID!) @auth(level: USER) {
+  tutorStudentSubjects(
+    where: { tutorId: { eq_expr: "auth.uid" }, id: { eq: $id } }
+  ) {
+    id
+    student {
+      name
+    }
+    startTime
+    endTime
+    eventId
+    subject
+    recurrence
+    rate
+    interval
+  }
+}
+
+query getTutorStudentSubjects @auth(level: USER) {
+  tutorStudentSubjects(
+    where: { tutorId: { eq_expr: "auth.uid" }}) {
+    id
+    student {
+      name
+    }
+    startTime
+    endTime
+    eventId
+    subject
+    recurrence
+    rate
+    interval
   }
 }

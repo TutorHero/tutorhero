@@ -10,13 +10,18 @@ const tutorStore = useTutorStore()
 const studentStore = useStudentStore()
 const authStore = useAuthStore()
 const { $firebaseAuth, $firebaseDataConnect } = useNuxtApp();
-import { getTutorStudents, createTutorStudentSubject, getStudentbyName } from '@firebasegen/default-connector'
+import { getTutorStudents, createTutorStudentSubject, getStudentbyName, getTutorStudentSubjects, deleteTutorStudentSubject } from '@firebasegen/default-connector'
 
 import axios from 'axios'
+import auth from "@/middleware/auth";
 onMounted(async () => {
-  await studentStore.deleteStudent("491fcd3be1c749949d6f2142a2e728e7")
-  qrString.value = await studentStore.generateQR('87782016',30,'Tuition fee')
-  await authStore.addEvent('Math Tuition', "2025-05-29T17:00:00", "2025-05-29T18:00:00","ad4c7f607c3b48d98491f45461df3151")
+  const { data: { tutorStudentSubjects } } = await getTutorStudentSubjects()
+  console.log(tutorStudentSubjects)
+  for (const subject of tutorStudentSubjects) {
+    console.log(subject)
+    await authStore.deleteSchedule(subject.id)
+  }
+  // await authStore.deleteSchedule(newId)
   qrString.value = await studentStore.generateQR('87782016', 30, 'Tuition fee')
   console.log(qrString.value)
   const qrCode = new QRCodeStyling({

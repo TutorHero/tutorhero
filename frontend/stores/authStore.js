@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { createLessonEvent } from '@firebasegen/default-connector';
+import { createLessonEvent, updateTutorStudentSubject, getTutorStudentSubjectbyId, deleteTutorStudentSubject } from '@firebasegen/default-connector';
 import { useTutorStore } from './tutorStore.js';
 import { useStudentStore } from './studentStore.js';
 import axios from 'axios'
@@ -44,7 +44,7 @@ export const useAuthStore = defineStore('authStore', {
           }
         })
 
-        
+
         console.log(data)
         let currentTutor
         if (data.status === 200) {
@@ -62,7 +62,7 @@ export const useAuthStore = defineStore('authStore', {
         console.log(error)
       }
     },
-    async addEvent(summary, startTime, endTime, studentId, reccurence = "RRULE:FREQ=WEEKLY;UNTIL=20251231T183000Z;WKST=SU;BYDAY=TH", tutorStudentSubjectId) {
+    async addSchedule(summary, startTime, endTime, studentId, reccurence = "RRULE:FREQ=WEEKLY;UNTIL=20251231T183000Z;WKST=SU;BYDAY=TH", tutorStudentSubjectId) {
       // Time in this format: 2025-05-29T17:00:00 no timezone
       try {
         if (!summary || !startTime || !endTime || !studentId) {
@@ -126,14 +126,41 @@ export const useAuthStore = defineStore('authStore', {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
             }
-          }) //TODO : INSERT ALL INTO DB
-        for (const event of data.items){
-          await createLessonEvent({ tutorStudentSubjectId, startTime: event.start.dateTime, endTime: event.end.dateTime, status:"Scheduled" });
+          })
+
+        const response1 = await updateTutorStudentSubject({ id: tutorStudentSubjectId, eventId }) // move logic to tutorstore
+        console.log(response1)
+        for (const event of data.items) {
+          await createLessonEvent({ tutorStudentSubjectId, startTime: event.start.dateTime, endTime: event.end.dateTime, status: "Scheduled" });
         }
 
       } catch (error) {
         console.log(error)
       }
+    },
+    async deleteSchedule(tutorStudentSubjectId) {
+      try {
+        const tutorStore = useTutorStore()
+        await tutorStore.getCurrentTutor()
+        console.log(tutorStore.tutor)
+        const calendarId = tutorStore.tutor.calendarId
+        const { data: { tutorStudentSubjects } } = await getTutorStudentSubjectbyId({ id: tutorStudentSubjectId })
+        console.log(tutorStudentSubjects)
+        const eventId = tutorStudentSubjects[0].eventId
+        console.log(this.accessToken)
+        await axios.delete(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events/${eventId}`, {
+          headers: {
+            'Authorization': `Bearer ${this.accessToken}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
+        })
+        await deleteTutorStudentSubject({ id: tutorStudentSubjectId })
+      } catch (error) {
+        console.log(error)
+      }
+
+
     },
     persist: true
   }

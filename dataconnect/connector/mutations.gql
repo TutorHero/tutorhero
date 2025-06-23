@@ -107,7 +107,6 @@ mutation updateStudent(
   )
 }
 
-
 mutation deleteStudent($id: UUID!) @auth(level: USER) {
   student_delete(id: $id)
 }
@@ -147,12 +146,12 @@ mutation createTutorStudentSubject(
 
 mutation updateTutorStudentSubject(
   $id: UUID!
-  $studentId: UUID!
-  $subject: String!
-  $rate: Float!
-  $startTime: Timestamp!
-  $endTime: Timestamp!
-  $interval: String!
+  $studentId: UUID
+  $subject: String
+  $rate: Float
+  $startTime: Timestamp
+  $endTime: Timestamp
+  $interval: String
   $eventId: String
   $recurrence: String
 ) @auth(level: USER) {
@@ -169,6 +168,12 @@ mutation updateTutorStudentSubject(
       eventId: $eventId
       recurrence: $recurrence
     }
+  )
+}
+
+mutation deleteTutorStudentSubject($id: UUID!) @auth(level: USER) {
+  tutorStudentSubject_delete(
+    first: { where: { tutorId: { eq_expr: "auth.uid" }, id: { eq: $id } } }
   )
 }
 

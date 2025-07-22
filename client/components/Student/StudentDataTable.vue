@@ -27,7 +27,7 @@
           </div>
           <DialogFooter>
             <DialogClose>
-              <Button variant="destructive" type="submit" @click="removeStudents">
+              <Button variant="destructive" type="submit" @click="deleteMultipleStudents">
                 Yes, remove
               </Button>
             </DialogClose>
@@ -61,7 +61,7 @@
             :data-state="row.getIsSelected() ? 'selected' : undefined"
           >
             <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id">
-              <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
+              <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" @deleteStudent="emitDeleteStudent" />
             </TableCell>
           </TableRow>
         </template>
@@ -151,10 +151,15 @@ const table = useVueTable<Student>({
   },
 })
 
-const studentStore = useStudentStore()
-const removeStudents = () => {
+const emits = defineEmits(['deleteStudent'])
+const deleteMultipleStudents = () => {
   table.getSelectedRowModel().rows.forEach(async student => {
     await deleteStudent({ id: student.id })
   })
+  emitDeleteStudent()
+}
+
+const emitDeleteStudent = () => {
+  emits('deleteStudent')
 }
 </script>

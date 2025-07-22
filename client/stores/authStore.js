@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { createLessonEvent } from '@firebasegen/default-connector';
 import { createLessonEvent, updateTutorStudentSubject, getTutorStudentSubjectbyId, deleteTutorStudentSubject } from '@firebasegen/default-connector';
 import { useTutorStore } from './tutorStore.js';
 import { useStudentStore } from './studentStore.js';
@@ -88,7 +87,7 @@ export const useAuthStore = defineStore('authStore', {
 
         const tutorStore = useTutorStore()
         await tutorStore.getCurrentTutor()
-        
+         
         const calendarId = tutorStore.tutor.calendarId
         const response = await axios.post(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?conferenceDataVersion=1`, requestPayload,
           {
@@ -124,12 +123,11 @@ export const useAuthStore = defineStore('authStore', {
       try {
         const tutorStore = useTutorStore()
         await tutorStore.getCurrentTutor()
-        console.log(tutorStore.tutor)
+
         const calendarId = tutorStore.tutor.calendarId
         const { data: { tutorStudentSubjects } } = await getTutorStudentSubjectbyId({ id: tutorStudentSubjectId })
-        console.log(tutorStudentSubjects)
         const eventId = tutorStudentSubjects[0].eventId
-        console.log(this.accessToken)
+        
         await axios.delete(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events/${eventId}`, {
           headers: {
             'Authorization': `Bearer ${this.accessToken}`,
@@ -137,12 +135,11 @@ export const useAuthStore = defineStore('authStore', {
             'Accept': 'application/json'
           }
         })
+
         await deleteTutorStudentSubject({ id: tutorStudentSubjectId })
       } catch (error) {
         console.log(error)
       }
-
-
     },
     persist: true
   }

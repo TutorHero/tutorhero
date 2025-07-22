@@ -28,7 +28,7 @@
         Are you sure you want to remove the selected student?
       </div>
       <DialogFooter>
-        <Button variant="destructive" type="submit" @click="removeStudent">
+        <Button variant="destructive" type="submit" @click="deleteStudentAndCloseDialog">
           Yes, remove
         </Button>
         <Button variant="secondary" @click="showRemoveStudentDialog = false">
@@ -68,8 +68,9 @@ const showSubjectFormDialog = ref(false)
 
 const props = defineProps(['student'])
 const emits = defineEmits(['deleteStudent'])
-const removeStudent = async () => {
-  await deleteStudent({ id: student.id })
+const deleteStudentAndCloseDialog = async () => {
+  await deleteStudent({ id: props.student.id })
+  emits('deleteStudent')
   showRemoveStudentDialog.value = false
 }
 </script>

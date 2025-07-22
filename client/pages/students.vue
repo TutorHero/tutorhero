@@ -1,7 +1,7 @@
 <template>
   <div>
-    <StudentDataTable :columns="columns" :data="students" filterPlaceholder="Filter student..."
-      @deleteStudent="deleteStudentEvent" filterColumn="name" />
+    <StudentDataTable :columns="columns" :data="students" filterPlaceholder="Filter student..." filterColumn="name" 
+      @deleteStudent="getStudents"/>
   </div>
 </template>
 
@@ -9,27 +9,13 @@
 import type { Student } from '@/components/Student/columns'
 import { columns } from '@/components/Student/columns'
 import StudentDataTable from '@/components/Student/StudentDataTable.vue'
-import { getTutorStudents, deleteStudent } from '@firebasegen/default-connector';
-
-interface Contact {
-  studentContact: string
-  parentContact: string
-}
+import { getTutorStudents } from '@firebasegen/default-connector';
 
 const students = ref<Student[]>([])
-
-const refetch = async () => {
+const getStudents = async () => {
   const { data } = await getTutorStudents()
   students.value = data.students
-  console.log(students.value)
-} // are we handling the source of truth from store or page?
-
-await refetch()
-
-const deleteStudentEvent = async (students: Student[]) => {
-  students.forEach(async student => {
-    await deleteStudent({ id: student.id })
-  })
 }
 
+await getStudents()
 </script>

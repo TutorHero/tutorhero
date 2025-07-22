@@ -1,7 +1,6 @@
 import type { ColumnDef } from '@tanstack/vue-table'
 import { MapPin } from 'lucide-vue-next';
 import { Checkbox } from '@/components/ui/checkbox'
-import { Button } from '@/components/ui/button'
 import DropdownMenuActions from './DropdownActions.vue';
 
 export interface Student {
@@ -85,7 +84,6 @@ export const columns: ColumnDef<Student>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const student = row.original
-
       return h(DropdownMenuActions, {
         student
       })

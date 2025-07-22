@@ -120,7 +120,7 @@ import {
   useVueTable,
 } from '@tanstack/vue-table'
 import type { Student } from './columns';
-import SubjectForm from '@/components/SubjectForm.vue'
+import { deleteStudent } from '@firebasegen/default-connector';
 
 const props = defineProps<{
   columns: ColumnDef<Student, TValue>[]
@@ -153,9 +153,8 @@ const table = useVueTable<Student>({
 
 const studentStore = useStudentStore()
 const removeStudents = () => {
-  console.log('delete')
-  table.getSelectedRowModel().rows.forEach(student => {
-    
-  })// emit to parent to delete
+  table.getSelectedRowModel().rows.forEach(async student => {
+    await deleteStudent({ id: student.id })
+  })
 }
 </script>

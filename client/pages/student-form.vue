@@ -52,8 +52,6 @@ import { useForm } from 'vee-validate'
 import { isUrlValid, deleteStudentFormUrl } from '@firebasegen/default-connector'
 
 const studentStore = useStudentStore()
-const students = ref([])
-const { $firebaseAuth, $firebaseDataConnect } = useNuxtApp()
 const { toast } = useToast()
 
 const route = useRoute()

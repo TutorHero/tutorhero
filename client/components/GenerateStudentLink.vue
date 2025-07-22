@@ -12,7 +12,7 @@
           <DialogDescription>Link generated for student form</DialogDescription>
         </DialogHeader>
         <div class="w-full flex justify-between items-center">
-          <div class="h-8 max-w-[220px] md:max-w-[340px] overflow-x-scroll">
+          <div class="h-10 max-w-[220px] md:max-w-[340px] overflow-x-scroll">
             <a class="text-blue-500 text-nowrap" :href="url">{{ url }}</a>
           </div>
           
@@ -40,8 +40,7 @@
 
 <script setup>
 import DialogTrigger from '~/components/ui/dialog/DialogTrigger.vue'
-import { createStudentFormUrl, isUrlValid } from '@firebasegen/default-connector';
-const { $firebaseAuth, $firebaseDataConnect } = useNuxtApp();
+import { createStudentFormUrl } from '@firebasegen/default-connector';
 const url = ref('')
 const copied = ref(false)
 

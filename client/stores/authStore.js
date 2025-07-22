@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { createLessonEvent } from '@firebasegen/default-connector';
 import { createLessonEvent, updateTutorStudentSubject, getTutorStudentSubjectbyId, deleteTutorStudentSubject } from '@firebasegen/default-connector';
 import { useTutorStore } from './tutorStore.js';
 import { useStudentStore } from './studentStore.js';
@@ -14,24 +14,8 @@ export const useAuthStore = defineStore('authStore', {
     }
   },
   actions: {
-    // async signInWithGoogle(auth) {
-    //   const provider = new GoogleAuthProvider()
-    //   try {
-    //     const tutorStore = useTutorStore()
-    //     const result = await signInWithPopup(auth, provider)
-    //     this.user = result.user
-    //     console.log(this.user)
-    //     const tutorExists = await tutorStore.ensureTutorExists(this.user)
-    //     return tutorExists
-
-
-    //   } catch (error) {
-    //     console.log(error)
-    //   }
-    // },
     async addCalendar() {
       try {
-        console.log('adding calendar')
         const data = await axios.post('https://www.googleapis.com/calendar/v3/calendars',
           {
             summary:
@@ -44,14 +28,11 @@ export const useAuthStore = defineStore('authStore', {
           }
         })
 
-        console.log(data)
         let currentTutor
         if (data.status === 200) {
           const tutorStore = useTutorStore()
           currentTutor = { ...tutorStore.tutor }
-          console.log(currentTutor)
           currentTutor.calendarId = data.data.id
-          console.log(currentTutor)
           delete currentTutor.id
           await tutorStore.updateTutor(currentTutor)
         } else {
@@ -104,9 +85,10 @@ export const useAuthStore = defineStore('authStore', {
             ] //TODO : handle reminders
           }
         }
+
         const tutorStore = useTutorStore()
         await tutorStore.getCurrentTutor()
-        console.log(tutorStore.tutor)
+        
         const calendarId = tutorStore.tutor.calendarId
         const response = await axios.post(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?conferenceDataVersion=1`, requestPayload,
           {
@@ -117,6 +99,7 @@ export const useAuthStore = defineStore('authStore', {
             }
           }
         )
+
         const eventId = response.data.id
         const { data } = await axios.get(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events/${eventId}/instances`,
           {

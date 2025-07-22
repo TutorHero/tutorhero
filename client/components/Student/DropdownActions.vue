@@ -61,15 +61,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { deleteStudent } from '@firebasegen/default-connector';
 
 const showRemoveStudentDialog = ref(false)
 const showSubjectFormDialog = ref(false)
 
 const props = defineProps(['student'])
 const emits = defineEmits(['deleteStudent'])
-const removeStudent = () => {
-  console.log(props.student.id)
+const removeStudent = async () => {
+  await deleteStudent({ id: student.id })
   showRemoveStudentDialog.value = false
-  emit('deleteStudent',[...props.student])
 }
 </script>

@@ -2,7 +2,7 @@ import type { ColumnDef } from '@tanstack/vue-table'
 import { MapPin } from 'lucide-vue-next';
 import { Checkbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/ui/button'
-import DropdownMenuActions from '../Student/DropdownActions.vue';
+import DropdownMenuActions from './DropdownActions.vue';
 
 export interface Student {
   id: string

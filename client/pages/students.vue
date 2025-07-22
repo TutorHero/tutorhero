@@ -18,8 +18,6 @@ interface Contact {
 
 const students = ref<Student[]>([])
 
-
-
 const refetch = async () => {
   const { data } = await getTutorStudents()
   students.value = data.students
@@ -29,9 +27,9 @@ const refetch = async () => {
 await refetch()
 
 const deleteStudentEvent = async (students: Student[]) => {
-  for (const student of students) {
+  students.forEach(async student => {
     await deleteStudent({ id: student.id })
-  }
+  })
 }
 
 </script>

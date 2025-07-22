@@ -23,5 +23,7 @@ logs
 .env.*
 !.env.example
 
+# DataConnect generated files
+/dataconnect/.dataconnect
 /dataconnect-generated/
 /dataconnect-generated/**

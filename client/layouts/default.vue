@@ -81,29 +81,19 @@
 <script setup>
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu'
-
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-
 import { Button } from '@/components/ui/button'
-
 import { LogOut } from "lucide-vue-next"
-
 import { Menu } from 'lucide-vue-next';
-
 import { signOut } from "firebase/auth"
 
 const { $firebaseAuth } = useNuxtApp()

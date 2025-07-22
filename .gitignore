@@ -66,14 +66,7 @@ node_modules/
 .env
 
 # dataconnect generated files
-/dataconnect/.dataconnect/
-
-# Ignore Firebase Data Connect generated SDK
-/dataconnect-generated/
-/dataconnect-generated/**
-
-.firebase
-.output  
-.nuxt
+.dataconnect
 
 .DS_Store
+

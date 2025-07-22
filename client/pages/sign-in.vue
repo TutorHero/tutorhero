@@ -4,7 +4,8 @@
       <img src="../public/static/TutorHero.svg" class="mt-20 md:mt-52 w-44 md:w-56">
       <h1 class="text-3xl md:text-4xl font-bold">TutorHero</h1>
     </div>
-    <div class="mt-16 md:mt-72 flex flex-col justify-center items-center">
+    <Spinner v-if="loading" class="mt-16 md:mt-72"/>
+    <div v-else class="mt-16 md:mt-72 flex flex-col justify-center items-center">
       <h2 class="text-4xl md:text-3xl font-semibold mb-5 md:mb-10">Become a tutor</h2>
       <Button variant="outline" @click="signIn">
         <svg viewBox="0 0 262 262" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid">
@@ -29,20 +30,15 @@
 <script setup>
 definePageMeta({ layout: false });
 const { $firebaseSignIn } = useNuxtApp();
-
 const tutorStore = useTutorStore()
-const authStore = useAuthStore()
 
-const signIn = async (auth) => {
+const signIn = async () => {
   await $firebaseSignIn()
-  console.log(authStore.user)
   const tutor = await tutorStore.getCurrentTutor()
-  console.log(tutor)
   if (tutor) {
     await navigateTo('/overview')
   } else {
     await navigateTo('/tutor-form')
   }
 }
-
 </script>

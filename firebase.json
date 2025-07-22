@@ -10,9 +10,6 @@
     "functions": {
       "port": 5001
     },
-    "pubsub": {
-      "port": 8085
-    },
     "ui": {
       "enabled": true
     },
@@ -21,24 +18,8 @@
   "dataconnect": {
     "source": "dataconnect"
   },
-  "functions": [
-    {
-      "source": "functions",
-      "codebase": "default",
-      "ignore": [
-        "node_modules",
-        ".git",
-        "firebase-debug.log",
-        "firebase-debug.*.log",
-        "*.local"
-      ],
-      "predeploy": [
-        "npm --prefix \"$RESOURCE_DIR\" run lint"
-      ]
-    }
-  ],
   "hosting": {
-    "public": "frontend/.output/public",
+    "public": "./client/.output/public",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -50,5 +31,18 @@
         "destination": "/index.html"
       }
     ]
-  }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
+    }
+  ]
 }
